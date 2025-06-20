@@ -1,0 +1,72 @@
+DROP TABLE IF EXISTS `user_settings`;
+
+CREATE TABLE
+    IF NOT EXISTS `user_settings` (
+        user_id VARCHAR(36),
+        daily_reminder TIME,
+        reminder_hours TIME
+    );
+
+DROP TABLE IF EXISTS `categories`;
+
+CREATE TABLE
+    IF NOT EXISTS `categories` (
+        id INT PRIMARY KEY AUTO_INCREMENT,
+        user_id VARCHAR(36),
+        name VARCHAR(255) NOT NULL
+    );
+
+DROP TABLE IF EXISTS `budgetings`;
+
+CREATE TABLE
+    IF NOT EXISTS `budgetings` (
+        id INT PRIMARY KEY AUTO_INCREMENT,
+        user_id VARCHAR(36) NOT NULL,
+        category_id INT NOT NULL,
+        amount INT NOT NULL,
+        time_period ENUM ('WEEKLY', 'MONTHLY') DEFAULT 'WEEKLY'
+    );
+
+DROP TABLE IF EXISTS `moneys`;
+
+CREATE TABLE
+    IF NOT EXISTS `moneys` (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        user_id VARCHAR(36) NOT NULL,
+        amount INT NOT NULL,
+        category_id INT NOT NULL,
+        type ENUM ('INCOME', 'EXPENSE') NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+
+DROP TABLE IF EXISTS `daily_assignments`;
+
+CREATE TABLE
+    IF NOT EXISTS `daily_assignments` (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        user_id VARCHAR(36) NOT NULL,
+        name VARCHAR(255) NOT NULL,
+        is_done TINYINT (1) DEFAULT 0
+    );
+
+DROP TABLE IF EXISTS `assignment_categories`;
+
+CREATE TABLE
+    IF NOT EXISTS `assigment_categories` (
+        id INT PRIMARY KEY AUTO_INCREMENT,
+        user_id INT NOT NULL,
+        name VARCHAR(255) NOT NULL
+    );
+
+DROP TABLE IF EXISTS `assignments`;
+
+CREATE TABLE
+    IF NOT EXISTS `assignments` (
+        id INT PRIMARY KEY NOT NULL,
+        user_id VARCHAR(36) NOT NULL,
+        name VARCHAR(36) NOT NULL,
+        deadline DATETIME NOT NULL,
+        status ENUM ('ON GOING', 'DONE') DEFAULT 'ON GOING',
+        priority ENUM ('HIGH', 'MEDIUM', 'LOW') DEFAULT 'LOW',
+        category_id INT NOT NULL
+    );
