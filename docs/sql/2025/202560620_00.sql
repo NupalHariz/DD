@@ -4,7 +4,7 @@ CREATE TABLE
     IF NOT EXISTS `user_settings` (
         user_id VARCHAR(36),
         daily_reminder TIME,
-        reminder_hours TIME
+        reminder_hour TIME
     );
 
 DROP TABLE IF EXISTS `categories`;
@@ -16,10 +16,10 @@ CREATE TABLE
         name VARCHAR(255) NOT NULL
     );
 
-DROP TABLE IF EXISTS `budgetings`;
+DROP TABLE IF EXISTS `budgets`;
 
 CREATE TABLE
-    IF NOT EXISTS `budgetings` (
+    IF NOT EXISTS `budgets` (
         id INT PRIMARY KEY AUTO_INCREMENT,
         user_id VARCHAR(36) NOT NULL,
         category_id INT NOT NULL,
@@ -66,7 +66,7 @@ CREATE TABLE
         user_id VARCHAR(36) NOT NULL,
         name VARCHAR(36) NOT NULL,
         deadline DATETIME NOT NULL,
-        status ENUM ('ON GOING', 'DONE') DEFAULT 'ON GOING',
+        status ENUM ('ONGOING', 'DONE') DEFAULT 'ONGOING',
         priority ENUM ('HIGH', 'MEDIUM', 'LOW') DEFAULT 'LOW',
         category_id INT NOT NULL
     );
