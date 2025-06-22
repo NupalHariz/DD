@@ -9,6 +9,8 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/NupalHariz/DD/src/business/usecase"
+	"github.com/NupalHariz/DD/src/utils/config"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/reyhanmichiels/go-pkg/appcontext"
@@ -18,8 +20,6 @@ import (
 	"github.com/reyhanmichiels/go-pkg/log"
 	"github.com/reyhanmichiels/go-pkg/parser"
 	"github.com/reyhanmichiels/go-pkg/rate_limiter"
-	"github.com/NupalHariz/DD/src/business/usecase"
-	"github.com/NupalHariz/DD/src/utils/config"
 )
 
 var once = &sync.Once{}
@@ -134,6 +134,9 @@ func (r *rest) Register() {
 
 	// category api
 	v1.POST("/categories/", r.CreateCategory)
+
+	// budget api
+	v1.POST("/budgets/", r.CreateBudget)
 }
 
 func (r *rest) Run() {
