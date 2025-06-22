@@ -1,16 +1,19 @@
 package usecase
 
 import (
+	"github.com/NupalHariz/DD/src/business/usecase/category"
+
+	"github.com/NupalHariz/DD/src/business/domain"
+	"github.com/NupalHariz/DD/src/business/usecase/user"
 	"github.com/reyhanmichiels/go-pkg/auth"
 	"github.com/reyhanmichiels/go-pkg/hash"
 	"github.com/reyhanmichiels/go-pkg/log"
 	"github.com/reyhanmichiels/go-pkg/parser"
-	"github.com/reyhanmichies/go-rest-api-boiler-plate/src/business/domain"
-	"github.com/reyhanmichies/go-rest-api-boiler-plate/src/business/usecase/user"
 )
 
 type Usecases struct {
-	User user.Interface
+	User     user.Interface
+	Category category.Interface
 }
 
 type InitParam struct {
@@ -23,6 +26,7 @@ type InitParam struct {
 
 func Init(param InitParam) *Usecases {
 	return &Usecases{
-		User: user.Init(user.InitParam{UserDomain: param.Dom.User, Auth: param.Auth, Hash: param.Hash}),
+		User:     user.Init(user.InitParam{UserDomain: param.Dom.User, Auth: param.Auth, Hash: param.Hash}),
+		Category: category.Init(category.InitParam{CategoryDom: param.Dom.Category, Auth: param.Auth}),
 	}
 }

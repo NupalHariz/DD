@@ -5,11 +5,11 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/NupalHariz/DD/src/business/entity"
 	"github.com/reyhanmichiels/go-pkg/codes"
 	"github.com/reyhanmichiels/go-pkg/errors"
 	"github.com/reyhanmichiels/go-pkg/query"
 	"github.com/reyhanmichiels/go-pkg/sql"
-	"github.com/reyhanmichies/go-rest-api-boiler-plate/src/business/entity"
 )
 
 func (u *user) createSQL(ctx context.Context, inputParam entity.UserInputParam) (entity.User, error) {

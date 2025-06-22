@@ -5,14 +5,14 @@ import (
 	"fmt"
 	"time"
 
+	userDomain "github.com/NupalHariz/DD/src/business/domain/user"
+	"github.com/NupalHariz/DD/src/business/entity"
 	"github.com/reyhanmichiels/go-pkg/auth"
 	"github.com/reyhanmichiels/go-pkg/codes"
 	"github.com/reyhanmichiels/go-pkg/errors"
 	"github.com/reyhanmichiels/go-pkg/hash"
 	"github.com/reyhanmichiels/go-pkg/null"
 	"github.com/reyhanmichiels/go-pkg/query"
-	userDomain "github.com/reyhanmichies/go-rest-api-boiler-plate/src/business/domain/user"
-	"github.com/reyhanmichies/go-rest-api-boiler-plate/src/business/entity"
 )
 
 var Now = time.Now

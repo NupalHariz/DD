@@ -1,4 +1,4 @@
-module github.com/reyhanmichies/go-rest-api-boiler-plate
+module github.com/NupalHariz/DD
 
 go 1.22.2
 
@@ -8,7 +8,7 @@ require (
 	github.com/gin-contrib/cors v1.7.2
 	github.com/gin-gonic/gin v1.10.0
 	github.com/google/uuid v1.4.0
-	github.com/reyhanmichiels/go-pkg v1.11.0
+	github.com/reyhanmichiels/go-pkg v1.12.0
 	github.com/stretchr/testify v1.9.0
 	github.com/swaggo/files v1.0.1
 	github.com/swaggo/gin-swagger v1.6.0

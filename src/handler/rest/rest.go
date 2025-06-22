@@ -18,8 +18,8 @@ import (
 	"github.com/reyhanmichiels/go-pkg/log"
 	"github.com/reyhanmichiels/go-pkg/parser"
 	"github.com/reyhanmichiels/go-pkg/rate_limiter"
-	"github.com/reyhanmichies/go-rest-api-boiler-plate/src/business/usecase"
-	"github.com/reyhanmichies/go-rest-api-boiler-plate/src/utils/config"
+	"github.com/NupalHariz/DD/src/business/usecase"
+	"github.com/NupalHariz/DD/src/utils/config"
 )
 
 var once = &sync.Once{}
@@ -130,7 +130,10 @@ func (r *rest) Register() {
 	r.http.Group("/public/v1/", commonPublicMiddlewares...)
 
 	// private api
-	r.http.Group("/v1/", commonPrivateMiddlewares...)
+	v1 := r.http.Group("/v1/", commonPrivateMiddlewares...)
+
+	// category api
+	v1.POST("/categories/", r.CreateCategory)
 }
 
 func (r *rest) Run() {

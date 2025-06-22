@@ -1,15 +1,18 @@
 package domain
 
 import (
+	"github.com/NupalHariz/DD/src/business/domain/category"
+
+	"github.com/NupalHariz/DD/src/business/domain/user"
 	"github.com/reyhanmichiels/go-pkg/log"
 	"github.com/reyhanmichiels/go-pkg/parser"
 	"github.com/reyhanmichiels/go-pkg/redis"
 	"github.com/reyhanmichiels/go-pkg/sql"
-	"github.com/reyhanmichies/go-rest-api-boiler-plate/src/business/domain/user"
 )
 
 type Domains struct {
-	User user.Interface
+	User     user.Interface
+	Category category.Interface
 }
 
 type InitParam struct {
@@ -22,6 +25,7 @@ type InitParam struct {
 
 func Init(param InitParam) *Domains {
 	return &Domains{
-		User: user.Init(user.InitParam{Db: param.Db, Log: param.Log, Redis: param.Redis, Json: param.Json}),
+		User:     user.Init(user.InitParam{Db: param.Db, Log: param.Log, Redis: param.Redis, Json: param.Json}),
+		Category: category.Init(category.InitParam{Db: param.Db, Log: param.Log}),
 	}
 }

@@ -4,6 +4,10 @@ import (
 	"context"
 	"errors"
 
+	"github.com/NupalHariz/DD/src/business/domain"
+	"github.com/NupalHariz/DD/src/business/usecase"
+	"github.com/NupalHariz/DD/src/handler/rest"
+	"github.com/NupalHariz/DD/src/utils/config"
 	"github.com/reyhanmichiels/go-pkg/auth"
 	"github.com/reyhanmichiels/go-pkg/configreader"
 	"github.com/reyhanmichiels/go-pkg/files"
@@ -13,10 +17,6 @@ import (
 	"github.com/reyhanmichiels/go-pkg/rate_limiter"
 	"github.com/reyhanmichiels/go-pkg/redis"
 	"github.com/reyhanmichiels/go-pkg/sql"
-	"github.com/reyhanmichies/go-rest-api-boiler-plate/src/business/domain"
-	"github.com/reyhanmichies/go-rest-api-boiler-plate/src/business/usecase"
-	"github.com/reyhanmichies/go-rest-api-boiler-plate/src/handler/rest"
-	"github.com/reyhanmichies/go-rest-api-boiler-plate/src/utils/config"
 )
 
 // @contact.name   Reyhan Hafiz Rusyard

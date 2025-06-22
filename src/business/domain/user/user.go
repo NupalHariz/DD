@@ -4,12 +4,12 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/NupalHariz/DD/src/business/entity"
 	"github.com/reyhanmichiels/go-pkg/errors"
 	"github.com/reyhanmichiels/go-pkg/log"
 	"github.com/reyhanmichiels/go-pkg/parser"
 	"github.com/reyhanmichiels/go-pkg/redis"
 	"github.com/reyhanmichiels/go-pkg/sql"
-	"github.com/reyhanmichies/go-rest-api-boiler-plate/src/business/entity"
 )
 
 type Interface interface {

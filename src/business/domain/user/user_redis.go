@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/NupalHariz/DD/src/business/entity"
 	"github.com/reyhanmichiels/go-pkg/codes"
 	"github.com/reyhanmichiels/go-pkg/errors"
-	"github.com/reyhanmichies/go-rest-api-boiler-plate/src/business/entity"
 )
 
 const (

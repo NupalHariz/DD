@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/DATA-DOG/go-sqlmock"
+	"github.com/NupalHariz/DD/src/business/entity"
 	"github.com/reyhanmichiels/go-pkg/codes"
 	"github.com/reyhanmichiels/go-pkg/errors"
 	"github.com/reyhanmichiels/go-pkg/null"
@@ -19,7 +20,6 @@ import (
 	mock_log "github.com/reyhanmichiels/go-pkg/tests/mock/log"
 	mock_parser "github.com/reyhanmichiels/go-pkg/tests/mock/parser"
 	mock_redis "github.com/reyhanmichiels/go-pkg/tests/mock/redis"
-	"github.com/reyhanmichies/go-rest-api-boiler-plate/src/business/entity"
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/mock/gomock"
 )
