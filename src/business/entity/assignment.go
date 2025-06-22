@@ -16,7 +16,7 @@ const (
 
 type Assignment struct {
 	Id         int64     `db:"id"`
-	UserId     string    `db:"user_id"`
+	UserId     int64    `db:"user_id"`
 	Name       string    `db:"name"`
 	Deadline   time.Time `db:"deadline"`
 	Status     Status    `db:"status"`

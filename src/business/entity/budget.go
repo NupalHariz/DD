@@ -9,7 +9,7 @@ const (
 
 type Budget struct {
 	Id         string     `db:"id"`
-	UserId     string     `db:"user_id"`
+	UserId     int64     `db:"user_id"`
 	CategoryId int64      `db:"category_id"`
 	Amount     int64      `db:"amount"`
 	Type       BudgetType `db:"type"`
