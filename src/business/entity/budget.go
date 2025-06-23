@@ -8,11 +8,12 @@ const (
 )
 
 type Budget struct {
-	Id         string     `db:"id"`
-	UserId     int64      `db:"user_id"`
-	CategoryId int64      `db:"category_id"`
-	Amount     int64      `db:"amount"`
-	Type       BudgetType `db:"type"`
+	Id             string     `db:"id"`
+	UserId         int64      `db:"user_id"`
+	CategoryId     int64      `db:"category_id"`
+	Amount         int64      `db:"amount"`
+	CurrentExpense int64      `db:"current_expense"`
+	Type           BudgetType `db:"type"`
 }
 
 type BudgetInputParam struct {
@@ -20,4 +21,10 @@ type BudgetInputParam struct {
 	CategoryId int64      `db:"category_id"`
 	Amount     int64      `db:"amount"`
 	Type       BudgetType `db:"type"`
+}
+
+type BudgetUpdateParam struct {
+	UserId         int64 `db:"user_id"`
+	CategoryId     int64 `db:"category_id"`
+	CurrentExpense int64 `db:"current_expense"`
 }

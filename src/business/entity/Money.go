@@ -9,7 +9,14 @@ const (
 
 type Money struct {
 	Id         int64     `db:"id"`
-	UserId     int64    `db:"user_id"`
+	UserId     int64     `db:"user_id"`
+	Amount     int64     `db:"amount"`
+	CategoryId int64     `db:"category_id"`
+	Type       MoneyType `db:"type"`
+}
+
+type MoneyInputParam struct {
+	UserId     int64     `db:"user_id"`
 	Amount     int64     `db:"amount"`
 	CategoryId int64     `db:"category_id"`
 	Type       MoneyType `db:"type"`

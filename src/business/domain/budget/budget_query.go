@@ -14,4 +14,13 @@ const (
 		:type
 	)
 	`
+
+	updateCurrentExpense = `
+		UPDATE budgets
+		SET current_expense = current_expense + :current_expense
+		WHERE
+		user_id = :user_id
+		AND
+		category_id = :category_id
+	`
 )

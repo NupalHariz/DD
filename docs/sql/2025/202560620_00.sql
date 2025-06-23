@@ -24,6 +24,7 @@ CREATE TABLE
         user_id VARCHAR(36) NOT NULL,
         category_id INT NOT NULL,
         amount INT NOT NULL,
+        current_expense INT NOT NULL DEFAULT 0,
         time_period ENUM ('WEEKLY', 'MONTHLY') DEFAULT 'WEEKLY'
     );
 
