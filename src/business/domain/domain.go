@@ -3,6 +3,7 @@ package domain
 import (
 	"github.com/NupalHariz/DD/src/business/domain/budget"
 	"github.com/NupalHariz/DD/src/business/domain/category"
+	"github.com/NupalHariz/DD/src/business/domain/money"
 
 	"github.com/NupalHariz/DD/src/business/domain/user"
 	"github.com/reyhanmichiels/go-pkg/log"
@@ -15,6 +16,7 @@ type Domains struct {
 	User     user.Interface
 	Category category.Interface
 	Budget   budget.Interface
+	Money    money.Interface
 }
 
 type InitParam struct {
@@ -30,5 +32,6 @@ func Init(param InitParam) *Domains {
 		User:     user.Init(user.InitParam{Db: param.Db, Log: param.Log, Redis: param.Redis, Json: param.Json}),
 		Category: category.Init(category.InitParam{Db: param.Db, Log: param.Log}),
 		Budget:   budget.Init(budget.InitParam{Db: param.Db, Log: param.Log}),
+		Money:    money.Init(money.InitParam{Db: param.Db, Log: param.Log}),
 	}
 }
