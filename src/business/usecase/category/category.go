@@ -26,7 +26,7 @@ type InitParam struct {
 func Init(param InitParam) Interface {
 	return &category{
 		categoryDom: param.CategoryDom,
-		auth: param.Auth,
+		auth:        param.Auth,
 	}
 }
 
@@ -39,5 +39,9 @@ func (c *category) Create(ctx context.Context, param dto.CreateCategoryParam) er
 	categoryInputParam := param.ToCategoryInputParam(loginUser.ID)
 
 	err = c.categoryDom.Create(ctx, categoryInputParam)
+	if err != nil {
+		return err
+	}
+	
 	return nil
 }
