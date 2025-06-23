@@ -36,7 +36,7 @@ func (c *category) Create(ctx context.Context, param dto.CreateCategoryParam) er
 		return err
 	}
 
-	categoryInputParam := param.ToCategory(loginUser.ID)
+	categoryInputParam := param.ToCategoryInputParam(loginUser.ID)
 
 	err = c.categoryDom.Create(ctx, categoryInputParam)
 	return nil
