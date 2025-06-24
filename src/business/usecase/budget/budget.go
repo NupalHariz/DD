@@ -5,7 +5,7 @@ import (
 
 	budgetDom "github.com/NupalHariz/DD/src/business/domain/budget"
 	"github.com/NupalHariz/DD/src/business/dto"
-	"github.com/reyhanmichiels/go-pkg/auth"
+	"github.com/reyhanmichiels/go-pkg/v2/auth"
 )
 
 type Interface interface {

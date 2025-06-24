@@ -3,7 +3,7 @@ package rest
 import (
 	"github.com/NupalHariz/DD/src/business/dto"
 	"github.com/gin-gonic/gin"
-	"github.com/reyhanmichiels/go-pkg/codes"
+	"github.com/reyhanmichiels/go-pkg/v2/codes"
 )
 
 func (r *rest) CreateCategory(ctx *gin.Context) {

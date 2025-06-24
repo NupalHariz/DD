@@ -16,3 +16,18 @@ func (c *CreateTransactionParam) ToInputMoneyParam(userId int64) entity.MoneyInp
 		Type:       entity.MoneyType(c.Type),
 	}
 }
+
+type UpdateTransactionParam struct {
+	Id         int64  `json:"-" uri:"id"`
+	Amount     int64  `json:"amount"`
+	CategoryId int64  `json:"category_id"`
+	Type       string `json:"type"`
+}
+
+func (u *UpdateTransactionParam) ToMoneyUpdateParam() entity.MoneyUpdateParam {
+	return entity.MoneyUpdateParam{
+		Amount:     u.Amount,
+		CategoryId: u.CategoryId,
+		Type:       entity.MoneyType(u.Type),
+	}
+}

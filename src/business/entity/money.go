@@ -1,5 +1,7 @@
 package entity
 
+import "github.com/reyhanmichiels/go-pkg/v2/query"
+
 type MoneyType string
 
 const (
@@ -20,4 +22,15 @@ type MoneyInputParam struct {
 	Amount     int64     `db:"amount"`
 	CategoryId int64     `db:"category_id"`
 	Type       MoneyType `db:"type"`
+}
+
+type MoneyUpdateParam struct {
+	Amount     int64     `db:"amount"`
+	CategoryId int64     `db:"category_id"`
+	Type       MoneyType `db:"type"`
+}
+
+type MoneyParam struct {
+	Id     int64 `db:"id" param:"id"`
+	Option query.Option
 }

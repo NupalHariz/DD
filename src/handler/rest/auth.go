@@ -5,7 +5,7 @@ import (
 
 	"github.com/NupalHariz/DD/src/business/entity"
 	"github.com/gin-gonic/gin"
-	"github.com/reyhanmichiels/go-pkg/codes"
+	"github.com/reyhanmichiels/go-pkg/v2/codes"
 )
 
 // @Summary Register

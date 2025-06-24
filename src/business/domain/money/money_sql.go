@@ -14,4 +14,20 @@ const (
 			:type 
 		)
 	`
+
+	readMoney = `
+		SELECT
+			id,
+			user_id,
+			amount,
+			category_id,
+			type
+		FROM
+			moneys
+	`
+
+	updateMoney = `
+		UPDATE
+			moneys
+	`
 )

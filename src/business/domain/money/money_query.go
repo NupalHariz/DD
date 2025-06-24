@@ -6,12 +6,13 @@ import (
 	"strings"
 
 	"github.com/NupalHariz/DD/src/business/entity"
-	"github.com/reyhanmichiels/go-pkg/codes"
-	"github.com/reyhanmichiels/go-pkg/errors"
-	"github.com/reyhanmichiels/go-pkg/sql"
+	"github.com/reyhanmichiels/go-pkg/v2/codes"
+	"github.com/reyhanmichiels/go-pkg/v2/errors"
+	"github.com/reyhanmichiels/go-pkg/v2/query"
+	"github.com/reyhanmichiels/go-pkg/v2/sql"
 )
 
-func (m *money) createSql(ctx context.Context, param entity.MoneyInputParam) error{
+func (m *money) createSql(ctx context.Context, param entity.MoneyInputParam) error {
 	m.log.Info(ctx, fmt.Sprintf("create money with body = %v", param))
 
 	tx, err := m.db.Leader().BeginTx(ctx, "txMoney", sql.TxOptions{})
@@ -19,7 +20,7 @@ func (m *money) createSql(ctx context.Context, param entity.MoneyInputParam) err
 		return errors.NewWithCode(codes.CodeSQLTxBegin, err.Error())
 	}
 	defer tx.Rollback()
-	
+
 	res, err := tx.NamedExec("iNewMoney", insertMoney, param)
 	if err != nil {
 		if strings.Contains(err.Error(), entity.DuplicateEntryErrMessage) {
@@ -39,5 +40,66 @@ func (m *money) createSql(ctx context.Context, param entity.MoneyInputParam) err
 	if err := tx.Commit(); err != nil {
 		return errors.NewWithCode(codes.CodeSQLTxCommit, err.Error())
 	}
+	return nil
+}
+
+func (m *money) getSQL(ctx context.Context, param entity.MoneyParam) (entity.Money, error) {
+	money := entity.Money{}
+
+	m.log.Debug(ctx, fmt.Sprintf("read money with param: %v", param))
+
+	qb := query.NewSQLQueryBuilder(m.db, "param", "db", &param.Option)
+
+	queryExt, queryArgs, _, _, err := qb.Build(&param)
+	if err != nil {
+		return money, errors.NewWithCode(codes.CodeSQLBuilder, err.Error())
+	}
+
+	rows, err := m.db.QueryRow(ctx, "rMoney", readMoney+queryExt, queryArgs...)
+	if err != nil {
+		if errors.Is(err, sql.ErrNotFound) {
+			return money, errors.NewWithCode(codes.CodeSQLRecordDoesNotExist, err.Error())
+		}
+
+		return money, errors.NewWithCode(codes.CodeSQL, err.Error())
+	}
+
+	if err := rows.StructScan(&money); err != nil {
+		if errors.Is(err, sql.ErrNotFound) {
+			return money, errors.NewWithCode(codes.CodeSQLRecordDoesNotExist, err.Error())
+		}
+
+		return money, errors.NewWithCode(codes.CodeSQLRowScan, err.Error())
+	}
+
+	m.log.Debug(ctx, fmt.Sprintf("success to get money with body: %v", money))
+
+	return money, nil
+}
+
+func (m *money) updateSQL(ctx context.Context, updateParam entity.MoneyUpdateParam, moneyParam entity.MoneyParam) error {
+	m.log.Debug(ctx, fmt.Sprintf("update money with body: %v and param: %v", updateParam, moneyParam))
+
+	qb := query.NewSQLQueryBuilder(m.db, "param", "db", &moneyParam.Option)
+
+	queryUpdate, args, err := qb.BuildUpdate(&updateParam, &moneyParam)
+	if err != nil {
+		return errors.NewWithCode(codes.CodeSQLBuilder, err.Error())
+	}
+
+	res, err := m.db.Exec(ctx, "uMoney", updateMoney+queryUpdate, args...)
+	if err != nil {
+		return errors.NewWithCode(codes.CodeSQL, err.Error())
+	}
+
+	rowCount, err := res.RowsAffected()
+	if err != nil {
+		return errors.NewWithCode(codes.CodeSQLNoRowsAffected, err.Error())
+	} else if rowCount < 1 {
+		return errors.NewWithCode(codes.CodeSQLNoRowsAffected, "no money updated")
+	}
+
+	m.log.Debug(ctx, fmt.Sprintf("success to upgrade money with body: %v", updateParam))
+
 	return nil
 }

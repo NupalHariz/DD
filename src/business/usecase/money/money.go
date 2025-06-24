@@ -9,11 +9,12 @@ import (
 
 	"github.com/NupalHariz/DD/src/business/dto"
 	"github.com/NupalHariz/DD/src/business/entity"
-	"github.com/reyhanmichiels/go-pkg/auth"
+	"github.com/reyhanmichiels/go-pkg/v2/auth"
 )
 
 type Interface interface {
 	Create(ctx context.Context, param dto.CreateTransactionParam) error
+	Update(ctx context.Context, param dto.UpdateTransactionParam) error
 }
 
 type money struct {
@@ -74,6 +75,38 @@ func (m *money) Create(ctx context.Context, param dto.CreateTransactionParam) er
 		if err != nil {
 			return err
 		}
+	}
+
+	return nil
+}
+
+func (m *money) Update(ctx context.Context, param dto.UpdateTransactionParam) error {
+	//Update Budget
+	if param.Amount != 0 {
+		money, err := m.moneyDom.Get(ctx, entity.MoneyParam{Id: param.Id})
+		if err != nil {
+			return err
+		}
+
+		amountChange := param.Amount - money.Amount
+
+		err = m.budgetDom.UpdateExpense(ctx, entity.BudgetUpdateParam{
+			UserId:         money.UserId,
+			CategoryId:     money.CategoryId,
+			CurrentExpense: amountChange,
+		})
+
+		if err != nil {
+			return err
+		}
+	}
+
+	//Update Money
+	updateMoneyParam := param.ToMoneyUpdateParam()
+
+	err := m.moneyDom.Update(ctx, updateMoneyParam, entity.MoneyParam{Id: param.Id})
+	if err != nil {
+		return err
 	}
 
 	return nil

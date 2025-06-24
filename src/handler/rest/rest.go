@@ -13,13 +13,13 @@ import (
 	"github.com/NupalHariz/DD/src/utils/config"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	"github.com/reyhanmichiels/go-pkg/appcontext"
-	"github.com/reyhanmichiels/go-pkg/auth"
-	"github.com/reyhanmichiels/go-pkg/codes"
-	"github.com/reyhanmichiels/go-pkg/errors"
-	"github.com/reyhanmichiels/go-pkg/log"
-	"github.com/reyhanmichiels/go-pkg/parser"
-	"github.com/reyhanmichiels/go-pkg/rate_limiter"
+	"github.com/reyhanmichiels/go-pkg/v2/appcontext"
+	"github.com/reyhanmichiels/go-pkg/v2/auth"
+	"github.com/reyhanmichiels/go-pkg/v2/codes"
+	"github.com/reyhanmichiels/go-pkg/v2/errors"
+	"github.com/reyhanmichiels/go-pkg/v2/log"
+	"github.com/reyhanmichiels/go-pkg/v2/parser"
+	"github.com/reyhanmichiels/go-pkg/v2/rate_limiter"
 )
 
 var once = &sync.Once{}
@@ -140,6 +140,7 @@ func (r *rest) Register() {
 
 	// money api
 	v1.POST("/moneys/", r.AddTransaction)
+	v1.PUT("/moneys/:id", r.UpdateTransaction)
 }
 
 func (r *rest) Run() {
