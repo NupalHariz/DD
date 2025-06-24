@@ -9,7 +9,7 @@ import (
 )
 
 type Interface interface {
-	Create(ctx context.Context, param entity.CategoryInputParam) error
+	Create(ctx context.Context, param entity.CategoryInputParam) (entity.Category, error)
 }
 
 type category struct {
@@ -29,11 +29,11 @@ func Init(param InitParam) Interface {
 	}
 }
 
-func (c *category) Create(ctx context.Context, param entity.CategoryInputParam) error {
-	err := c.createSQL(ctx, param)
+func (c *category) Create(ctx context.Context, param entity.CategoryInputParam) (entity.Category, error) {
+	category, err := c.createSQL(ctx, param)
 	if err != nil {
-		return err
+		return category, err
 	}
 
-	return nil
+	return category, nil
 }

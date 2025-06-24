@@ -31,7 +31,7 @@ type InitParam struct {
 func Init(param InitParam) *Usecases {
 	return &Usecases{
 		User:     user.Init(user.InitParam{UserDomain: param.Dom.User, Auth: param.Auth, Hash: param.Hash}),
-		Category: category.Init(category.InitParam{CategoryDom: param.Dom.Category, Auth: param.Auth}),
+		Category: category.Init(category.InitParam{CategoryDom: param.Dom.Category, BudgetDom: param.Dom.Budget, Auth: param.Auth}),
 		Budget:   budget.Init(budget.InitParam{Auth: param.Auth, BudgetDom: param.Dom.Budget}),
 		Money:    money.Init(money.InitParam{Auth: param.Auth, MoneyDom: param.Dom.Money, BudgetDom: param.Dom.Budget}),
 	}
