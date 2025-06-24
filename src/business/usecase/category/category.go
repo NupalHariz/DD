@@ -3,7 +3,9 @@ package category
 import (
 	"context"
 
+	budgetDom "github.com/NupalHariz/DD/src/business/domain/budget"
 	domCategory "github.com/NupalHariz/DD/src/business/domain/category"
+	"github.com/NupalHariz/DD/src/business/entity"
 
 	"github.com/NupalHariz/DD/src/business/dto"
 	"github.com/reyhanmichiels/go-pkg/v2/auth"
@@ -15,17 +17,20 @@ type Interface interface {
 
 type category struct {
 	categoryDom domCategory.Interface
+	budgetDom   budgetDom.Interface
 	auth        auth.Interface
 }
 
 type InitParam struct {
 	CategoryDom domCategory.Interface
+	BudgetDom   budgetDom.Interface
 	Auth        auth.Interface
 }
 
 func Init(param InitParam) Interface {
 	return &category{
 		categoryDom: param.CategoryDom,
+		budgetDom:   param.BudgetDom,
 		auth:        param.Auth,
 	}
 }
@@ -38,7 +43,21 @@ func (c *category) Create(ctx context.Context, param dto.CreateCategoryParam) er
 
 	categoryInputParam := param.ToCategoryInputParam(loginUser.ID)
 
-	err = c.categoryDom.Create(ctx, categoryInputParam)
+	category, err := c.categoryDom.Create(ctx, categoryInputParam)
+	if err != nil {
+		return err
+	}
+
+	err = c.budgetDom.Create(
+		ctx,
+		entity.BudgetInputParam{
+			UserId:     loginUser.ID,
+			CategoryId: category.Id,
+			Amount:     0,
+			Type:       entity.Weekly,
+		},
+	)
+
 	if err != nil {
 		return err
 	}
