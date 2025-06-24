@@ -6,7 +6,7 @@ import (
 	domCategory "github.com/NupalHariz/DD/src/business/domain/category"
 
 	"github.com/NupalHariz/DD/src/business/dto"
-	"github.com/reyhanmichiels/go-pkg/auth"
+	"github.com/reyhanmichiels/go-pkg/v2/auth"
 )
 
 type Interface interface {
@@ -42,6 +42,6 @@ func (c *category) Create(ctx context.Context, param dto.CreateCategoryParam) er
 	if err != nil {
 		return err
 	}
-	
+
 	return nil
 }

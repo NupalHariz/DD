@@ -6,10 +6,10 @@ import (
 	"github.com/NupalHariz/DD/src/business/domain/money"
 
 	"github.com/NupalHariz/DD/src/business/domain/user"
-	"github.com/reyhanmichiels/go-pkg/log"
-	"github.com/reyhanmichiels/go-pkg/parser"
-	"github.com/reyhanmichiels/go-pkg/redis"
-	"github.com/reyhanmichiels/go-pkg/sql"
+	"github.com/reyhanmichiels/go-pkg/v2/log"
+	"github.com/reyhanmichiels/go-pkg/v2/parser"
+	"github.com/reyhanmichiels/go-pkg/v2/redis"
+	"github.com/reyhanmichiels/go-pkg/v2/sql"
 )
 
 type Domains struct {

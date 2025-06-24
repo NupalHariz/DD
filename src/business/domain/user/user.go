@@ -5,11 +5,11 @@ import (
 	"fmt"
 
 	"github.com/NupalHariz/DD/src/business/entity"
-	"github.com/reyhanmichiels/go-pkg/errors"
-	"github.com/reyhanmichiels/go-pkg/log"
-	"github.com/reyhanmichiels/go-pkg/parser"
-	"github.com/reyhanmichiels/go-pkg/redis"
-	"github.com/reyhanmichiels/go-pkg/sql"
+	"github.com/reyhanmichiels/go-pkg/v2/errors"
+	"github.com/reyhanmichiels/go-pkg/v2/log"
+	"github.com/reyhanmichiels/go-pkg/v2/parser"
+	"github.com/reyhanmichiels/go-pkg/v2/redis"
+	"github.com/reyhanmichiels/go-pkg/v2/sql"
 )
 
 type Interface interface {

@@ -4,8 +4,8 @@ import (
 	"context"
 
 	"github.com/NupalHariz/DD/src/business/entity"
-	"github.com/reyhanmichiels/go-pkg/log"
-	"github.com/reyhanmichiels/go-pkg/sql"
+	"github.com/reyhanmichiels/go-pkg/v2/log"
+	"github.com/reyhanmichiels/go-pkg/v2/sql"
 )
 
 type Interface interface {

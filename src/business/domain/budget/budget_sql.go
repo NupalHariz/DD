@@ -6,9 +6,9 @@ import (
 	"strings"
 
 	"github.com/NupalHariz/DD/src/business/entity"
-	"github.com/reyhanmichiels/go-pkg/codes"
-	"github.com/reyhanmichiels/go-pkg/errors"
-	"github.com/reyhanmichiels/go-pkg/sql"
+	"github.com/reyhanmichiels/go-pkg/v2/codes"
+	"github.com/reyhanmichiels/go-pkg/v2/errors"
+	"github.com/reyhanmichiels/go-pkg/v2/sql"
 )
 
 func (b *budget) CreateSQL(ctx context.Context, param entity.BudgetInputParam) error {
