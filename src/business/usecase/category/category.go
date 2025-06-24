@@ -4,7 +4,7 @@ import (
 	"context"
 
 	budgetDom "github.com/NupalHariz/DD/src/business/domain/budget"
-	domCategory "github.com/NupalHariz/DD/src/business/domain/category"
+	categoryDom "github.com/NupalHariz/DD/src/business/domain/category"
 	"github.com/NupalHariz/DD/src/business/entity"
 
 	"github.com/NupalHariz/DD/src/business/dto"
@@ -16,13 +16,13 @@ type Interface interface {
 }
 
 type category struct {
-	categoryDom domCategory.Interface
+	categoryDom categoryDom.Interface
 	budgetDom   budgetDom.Interface
 	auth        auth.Interface
 }
 
 type InitParam struct {
-	CategoryDom domCategory.Interface
+	CategoryDom categoryDom.Interface
 	BudgetDom   budgetDom.Interface
 	Auth        auth.Interface
 }
