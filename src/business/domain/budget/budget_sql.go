@@ -8,6 +8,7 @@ import (
 	"github.com/NupalHariz/DD/src/business/entity"
 	"github.com/reyhanmichiels/go-pkg/v2/codes"
 	"github.com/reyhanmichiels/go-pkg/v2/errors"
+	"github.com/reyhanmichiels/go-pkg/v2/query"
 	"github.com/reyhanmichiels/go-pkg/v2/sql"
 )
 
@@ -73,5 +74,40 @@ func (b *budget) updateExpenseSQL(ctx context.Context, updateParam entity.Budget
 	if err := tx.Commit(); err != nil {
 		return errors.NewWithCode(codes.CodeSQLTxCommit, err.Error())
 	}
+	return nil
+}
+
+func (b *budget) updateSQL(ctx context.Context, updateParam entity.BudgetUpdateParamm, budgetParam entity.BudgetParam) error {
+	b.log.Debug(ctx, fmt.Sprintf("update budget with body %v and param %v", updateParam, budgetParam))
+
+	qb := query.NewSQLQueryBuilder(b.db, "param", "db", &budgetParam.Option)
+
+	queryUpdate, args, err := qb.BuildUpdate(&updateParam, &budgetParam)
+	if err != nil {
+		return errors.NewWithCode(codes.CodeSQLBuilder, err.Error())
+	}
+
+	tx, err := b.db.Leader().BeginTx(ctx, "txBudget", sql.TxOptions{})
+	if err != nil {
+		return errors.NewWithCode(codes.CodeSQLTxBegin, err.Error())
+	}
+	defer tx.Rollback()
+
+	res, err := tx.Exec("uBudget", updateBudget+queryUpdate, args...)
+	if err != nil {
+		return errors.NewWithCode(codes.CodeSQLTxExec, err.Error())
+	}
+
+	rowCount, err := res.RowsAffected()
+	if err != nil {
+		return errors.NewWithCode(codes.CodeSQLNoRowsAffected, err.Error())
+	} else if rowCount < 1 {
+		return errors.NewWithCode(codes.CodeSQLNoRowsAffected, "no budget updated")
+	}
+
+	if err := tx.Commit(); err != nil {
+		return errors.NewWithCode(codes.CodeSQLTxCommit, err.Error())
+	}
+
 	return nil
 }

@@ -11,6 +11,7 @@ import (
 type Interface interface {
 	Create(ctx context.Context, param entity.BudgetInputParam) error
 	UpdateExpense(ctx context.Context, updateParam entity.BudgetUpdateParam) error
+	Update(ctx context.Context, updateParam entity.BudgetUpdateParamm, budgetParam entity.BudgetParam) error
 }
 
 type budget struct {
@@ -40,6 +41,15 @@ func (b *budget) Create(ctx context.Context, param entity.BudgetInputParam) erro
 
 func (b *budget) UpdateExpense(ctx context.Context, updateParam entity.BudgetUpdateParam) error {
 	err := b.updateExpenseSQL(ctx, updateParam)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (b *budget) Update(ctx context.Context, updateParam entity.BudgetUpdateParamm, budgetParam entity.BudgetParam) error {
+	err := b.updateSQL(ctx, updateParam, budgetParam)
 	if err != nil {
 		return err
 	}
