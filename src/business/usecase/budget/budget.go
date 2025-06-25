@@ -52,5 +52,5 @@ func (b *budget) Update(ctx context.Context, param dto.UpdateBudgetParam) error 
 		return err
 	}
 
-	return err
+	return nil
 }
