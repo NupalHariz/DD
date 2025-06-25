@@ -87,9 +87,15 @@ func (m *money) updateSQL(ctx context.Context, updateParam entity.MoneyUpdatePar
 		return errors.NewWithCode(codes.CodeSQLBuilder, err.Error())
 	}
 
-	res, err := m.db.Exec(ctx, "uMoney", updateMoney+queryUpdate, args...)
+	tx, err := m.db.Leader().BeginTx(ctx, "txMoney", sql.TxOptions{})
 	if err != nil {
-		return errors.NewWithCode(codes.CodeSQL, err.Error())
+		return errors.NewWithCode(codes.CodeSQLTxBegin, err.Error())
+	}
+	defer tx.Rollback()
+
+	res, err := tx.Exec("uMoney", updateMoney+queryUpdate, args...)
+	if err != nil {
+		return errors.NewWithCode(codes.CodeSQLTxExec, err.Error())
 	}
 
 	rowCount, err := res.RowsAffected()
@@ -97,6 +103,10 @@ func (m *money) updateSQL(ctx context.Context, updateParam entity.MoneyUpdatePar
 		return errors.NewWithCode(codes.CodeSQLNoRowsAffected, err.Error())
 	} else if rowCount < 1 {
 		return errors.NewWithCode(codes.CodeSQLNoRowsAffected, "no money updated")
+	}
+
+	if err := tx.Commit(); err != nil {
+		return errors.NewWithCode(codes.CodeSQLTxCommit, err.Error())
 	}
 
 	m.log.Debug(ctx, fmt.Sprintf("success to upgrade money with body: %v", updateParam))

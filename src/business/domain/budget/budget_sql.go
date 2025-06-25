@@ -109,5 +109,7 @@ func (b *budget) updateSQL(ctx context.Context, updateParam entity.BudgetUpdateP
 		return errors.NewWithCode(codes.CodeSQLTxCommit, err.Error())
 	}
 
+	b.log.Debug(ctx, fmt.Sprintf("success to update budget with body: %v", updateParam))
+
 	return nil
 }
