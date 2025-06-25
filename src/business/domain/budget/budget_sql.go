@@ -77,7 +77,7 @@ func (b *budget) updateExpenseSQL(ctx context.Context, updateParam entity.Budget
 	return nil
 }
 
-func (b *budget) updateSQL(ctx context.Context, updateParam entity.BudgetUpdateParamm, budgetParam entity.BudgetParam) error {
+func (b *budget) updateSQL(ctx context.Context, updateParam entity.BudgetUpdateParam, budgetParam entity.BudgetParam) error {
 	b.log.Debug(ctx, fmt.Sprintf("update budget with body %v and param %v", updateParam, budgetParam))
 
 	qb := query.NewSQLQueryBuilder(b.db, "param", "db", &budgetParam.Option)

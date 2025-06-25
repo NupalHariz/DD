@@ -33,11 +33,6 @@ type BudgetUpdateParam struct {
 	Type           BudgetType `db:"time_period"`
 }
 
-type BudgetUpdateParamm struct {
-	Amount         int64      `db:"amount"`
-	Type           BudgetType `db:"time_period"`
-}
-
 type BudgetParam struct {
 	Id     int64 `db:"id" param:"id"`
 	Option query.Option

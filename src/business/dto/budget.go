@@ -23,8 +23,8 @@ type UpdateBudgetParam struct {
 	Type   string `json:"type"`
 }
 
-func (u *UpdateBudgetParam) ToBudgetUpdateParam() entity.BudgetUpdateParamm {
-	return entity.BudgetUpdateParamm{
+func (u *UpdateBudgetParam) ToBudgetUpdateParam() entity.BudgetUpdateParam {
+	return entity.BudgetUpdateParam{
 		Amount: u.Amount,
 		Type:   entity.BudgetType(u.Type),
 	}
