@@ -23,4 +23,9 @@ const (
 		AND
 		category_id = :category_id
 	`
+
+	updateBudget = `
+		UPDATE
+			budgets
+	`
 )

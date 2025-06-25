@@ -1,5 +1,7 @@
 package entity
 
+import "github.com/reyhanmichiels/go-pkg/v2/query"
+
 type BudgetType string
 
 const (
@@ -13,7 +15,7 @@ type Budget struct {
 	CategoryId     int64      `db:"category_id"`
 	Amount         int64      `db:"amount"`
 	CurrentExpense int64      `db:"current_expense"`
-	Type           BudgetType `db:"type"`
+	Type           BudgetType `db:"time_period"`
 }
 
 type BudgetInputParam struct {
@@ -24,7 +26,14 @@ type BudgetInputParam struct {
 }
 
 type BudgetUpdateParam struct {
-	UserId         int64 `db:"user_id"`
-	CategoryId     int64 `db:"category_id"`
-	CurrentExpense int64 `db:"current_expense"`
+	UserId         int64      `db:"user_id"`
+	CategoryId     int64      `db:"category_id"`
+	CurrentExpense int64      `db:"current_expense"`
+	Amount         int64      `db:"amount"`
+	Type           BudgetType `db:"time_period"`
+}
+
+type BudgetParam struct {
+	Id     int64 `db:"id" param:"id"`
+	Option query.Option
 }

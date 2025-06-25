@@ -16,3 +16,16 @@ func (c *CreateBudgetParam) ToBudgetInputParam(userId int64) entity.BudgetInputP
 		Type:       entity.BudgetType(c.Type),
 	}
 }
+
+type UpdateBudgetParam struct {
+	Id     int64  `json:"-" uri:"id"`
+	Amount int64  `json:"amount"`
+	Type   string `json:"type"`
+}
+
+func (u *UpdateBudgetParam) ToBudgetUpdateParam() entity.BudgetUpdateParam {
+	return entity.BudgetUpdateParam{
+		Amount: u.Amount,
+		Type:   entity.BudgetType(u.Type),
+	}
+}
