@@ -76,7 +76,7 @@ DROP TABLE IF EXISTS `history_budgets`;
 
 CREATE TABLE
     IF NOT EXISTS `history_budgets` (
-        id INT PRIMARY KEY NOT NULL,
+        id INT PRIMARY KEY AUTO_INCREMENT,
         user_id INT NOT NULL,
         budget_id INT NOT NULL,
         category_id INT NOT NULL,
