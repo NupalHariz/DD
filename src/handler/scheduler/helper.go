@@ -7,6 +7,8 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/reyhanmichiels/go-pkg/v2/appcontext"
+	"github.com/reyhanmichiels/go-pkg/v2/codes"
+	"github.com/reyhanmichiels/go-pkg/v2/errors"
 )
 
 const (
@@ -45,6 +47,8 @@ func (s *scheduler) assignTask(conf SchedulerTaskConf, task handlerFunc) {
 			_, err = s.cron.Every(1).Week().Sunday().Tag(conf.Name).At(conf.ScheduledTime).Do(schedulerFunc)
 		case schedulerTypeMonthly:
 			_, err = s.cron.Every(1).Month(-1).Tag(conf.Name).At(conf.ScheduledTime).Do(schedulerFunc)
+		default:
+			err = errors.NewWithCode(codes.CodeInternalServerError, "unknown scheduler time type")
 		}
 
 		if err != nil {
