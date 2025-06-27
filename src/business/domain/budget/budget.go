@@ -12,6 +12,7 @@ type Interface interface {
 	Create(ctx context.Context, param entity.BudgetInputParam) error
 	UpdateExpense(ctx context.Context, updateParam entity.BudgetUpdateParam) error
 	Update(ctx context.Context, updateParam entity.BudgetUpdateParam, budgetParam entity.BudgetParam) error
+	GetAll(ctx context.Context, budgetParam entity.BudgetParam) ([]entity.Budget, error)
 }
 
 type budget struct {
@@ -55,4 +56,13 @@ func (b *budget) Update(ctx context.Context, updateParam entity.BudgetUpdatePara
 	}
 
 	return nil
+}
+
+func (b *budget) GetAll(ctx context.Context, budgetParam entity.BudgetParam) ([]entity.Budget, error) {
+	budgets, err := b.getAllSQL(ctx, budgetParam)
+	if err != nil {
+		return budgets, err
+	}
+
+	return budgets, err
 }

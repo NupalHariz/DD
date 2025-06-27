@@ -28,4 +28,16 @@ const (
 		UPDATE
 			budgets
 	`
+
+	readBudget = `
+		SELECT
+			id,
+			user_id,
+			category_id,
+			amount,
+			current_expense,
+			time_period
+		FROM
+			budgets
+	`
 )

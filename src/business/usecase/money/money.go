@@ -10,6 +10,7 @@ import (
 	"github.com/NupalHariz/DD/src/business/dto"
 	"github.com/NupalHariz/DD/src/business/entity"
 	"github.com/reyhanmichiels/go-pkg/v2/auth"
+	"github.com/reyhanmichiels/go-pkg/v2/null"
 )
 
 type Interface interface {
@@ -58,7 +59,7 @@ func (m *money) Create(ctx context.Context, param dto.CreateTransactionParam) er
 			entity.BudgetUpdateParam{
 				UserId:         inputMoneyParam.UserId,
 				CategoryId:     inputMoneyParam.CategoryId,
-				CurrentExpense: inputMoneyParam.Amount,
+				CurrentExpense: null.Int64From(inputMoneyParam.Amount),
 			},
 		)
 	}()
@@ -93,7 +94,7 @@ func (m *money) Update(ctx context.Context, param dto.UpdateTransactionParam) er
 		err = m.budgetDom.UpdateExpense(ctx, entity.BudgetUpdateParam{
 			UserId:         money.UserId,
 			CategoryId:     money.CategoryId,
-			CurrentExpense: amountChange,
+			CurrentExpense: null.Int64From(amountChange),
 		})
 
 		if err != nil {

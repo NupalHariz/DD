@@ -50,16 +50,39 @@ func Init(param InitParam) Interface {
 		cron.TagsUnique()
 
 		s = &scheduler{
+			cron:     cron,
 			metaConf: param.MetaConf,
 			log:      param.Log,
 			uc:       param.Uc,
 		}
+
+		s.assignScheduledTask()
 	})
 
 	return s
 }
 
-func (s *scheduler) assignScheduledTask() {}
+func (s *scheduler) assignScheduledTask() {
+	s.assignTask(
+		SchedulerTaskConf{
+			Name:          "ResetWeeklyBudget",
+			Enabled:       true,
+			TimeType:      schedulerTypeWeekly,
+			ScheduledTime: "23:59",
+		},
+		s.uc.Budget.WeeklyResetScheduler,
+	)
+
+	s.assignTask(
+		SchedulerTaskConf{
+			Name:          "ResetMonthlyBudget",
+			Enabled:       true,
+			TimeType:      schedulerTypeMonthly,
+			ScheduledTime: "23:59",
+		},
+		s.uc.Budget.WeeklyResetScheduler,
+	)
+}
 
 func (s *scheduler) Run() {
 	s.cron.StartAsync()

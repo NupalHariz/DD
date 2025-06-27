@@ -42,9 +42,9 @@ func (s *scheduler) assignTask(conf SchedulerTaskConf, task handlerFunc) {
 
 		switch conf.TimeType {
 		case schedulerTypeWeekly:
-			_, err = s.cron.Week().Sunday().Tag(conf.Name).At(conf.ScheduledTime).Do(shcedulerFunc)
+			_, err = s.cron.Every(1).Week().Sunday().Tag(conf.Name).At(conf.ScheduledTime).Do(shcedulerFunc)
 		case schedulerTypeMonthly:
-			_, err = s.cron.Month(-1).Tag(conf.Name).At(conf.ScheduledTime).Do(shcedulerFunc)
+			_, err = s.cron.Every(1).Month(-1).Tag(conf.Name).At(conf.ScheduledTime).Do(shcedulerFunc)
 		}
 
 		if err != nil {
