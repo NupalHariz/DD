@@ -151,5 +151,5 @@ func (b budget) getAllSQL(ctx context.Context, budgetParam entity.BudgetParam) (
 
 	b.log.Debug(ctx, fmt.Sprintf("success to get budgets with param: %v", budgetParam))
 
-	return budgets, err
+	return budgets, nil
 }

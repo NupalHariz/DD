@@ -64,5 +64,5 @@ func (b *budget) GetAll(ctx context.Context, budgetParam entity.BudgetParam) ([]
 		return budgets, err
 	}
 
-	return budgets, err
+	return budgets, nil
 }
