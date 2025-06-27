@@ -71,3 +71,19 @@ CREATE TABLE
         priority ENUM ('HIGH', 'MEDIUM', 'LOW') DEFAULT 'LOW',
         category_id INT NOT NULL
     );
+
+DROP TABLE IF EXISTS `history_budgets`;
+
+CREATE TABLE
+    IF NOT EXISTS `history_budgets` (
+        id INT PRIMARY KEY AUTO_INCREMENT,
+        user_id INT NOT NULL,
+        budget_id INT NOT NULL,
+        category_id INT NOT NULL,
+        spent INT NOT NULL,
+        planned INT NOT NULL,
+        type ENUM ('WEEKLY', 'MONTHLY'),
+        period_start DATE NOT NULL,
+        period_end DATE NOT NULL,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    );

@@ -14,7 +14,7 @@ import (
 func (c *category) createSQL(ctx context.Context, param entity.CategoryInputParam) (entity.Category, error) {
 	var category entity.Category
 
-	c.log.Debug(ctx, fmt.Sprintf("create category with body = %v", param))
+	c.log.Debug(ctx, fmt.Sprintf("create category with body: %v", param))
 
 	tx, err := c.db.Leader().BeginTx(ctx, "txCategory", sql.TxOptions{})
 	if err != nil {

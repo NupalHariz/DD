@@ -7,6 +7,7 @@ import (
 	"github.com/NupalHariz/DD/src/business/domain"
 	"github.com/NupalHariz/DD/src/business/usecase"
 	"github.com/NupalHariz/DD/src/handler/rest"
+	"github.com/NupalHariz/DD/src/handler/scheduler"
 	"github.com/NupalHariz/DD/src/utils/config"
 	"github.com/reyhanmichiels/go-pkg/v2/auth"
 	"github.com/reyhanmichiels/go-pkg/v2/configreader"
@@ -81,8 +82,18 @@ func main() {
 	// init usecase
 	uc := usecase.Init(usecase.InitParam{Dom: dom, Log: log, Json: parser.JSONParser(), Hash: hash, Auth: auth})
 
+	sch := scheduler.Init(
+		scheduler.InitParam{
+			MetaConf: cfg.Meta,
+			Log: log,
+			Uc: uc,
+		},
+	)
+
 	// init http server
 	r := rest.Init(rest.InitParam{Uc: uc, GinConfig: cfg.Gin, Log: log, RateLimiter: rateLimiter, Json: parser.JSONParser(), Auth: auth})
+
+	sch.Run()
 
 	// run http server
 	r.Run()

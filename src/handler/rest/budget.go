@@ -26,7 +26,7 @@ func (r *rest) CreateBudget(ctx *gin.Context) {
 func (r *rest) UpdateBudget(ctx *gin.Context) {
 	var param dto.UpdateBudgetParam
 
-	if  err := r.Bind(ctx, &param); err != nil{
+	if err := r.Bind(ctx, &param); err != nil {
 		r.httpRespError(ctx, err)
 		return
 	}

@@ -12,8 +12,8 @@ import (
 	"github.com/reyhanmichiels/go-pkg/v2/sql"
 )
 
-func (b *budget) CreateSQL(ctx context.Context, param entity.BudgetInputParam) error {
-	b.log.Info(ctx, fmt.Sprintf("create budget with body: %v", param))
+func (b *budget) createSQL(ctx context.Context, param entity.BudgetInputParam) error {
+	b.log.Debug(ctx, fmt.Sprintf("create budget with body: %v", param))
 
 	tx, err := b.db.Leader().BeginTx(ctx, "txBudget", sql.TxOptions{})
 	if err != nil {
@@ -41,12 +41,14 @@ func (b *budget) CreateSQL(ctx context.Context, param entity.BudgetInputParam) e
 		return errors.NewWithCode(codes.CodeSQLTxCommit, err.Error())
 	}
 
+	b.log.Debug(ctx, fmt.Sprintf("success to create budget with body: %v", param))
+
 	return nil
 }
 
 func (b *budget) updateExpenseSQL(ctx context.Context, updateParam entity.BudgetUpdateParam) error {
-	b.log.Info(ctx, fmt.Sprintf(
-		"adding %d into current expense with user_id = %d and category_id = %d",
+	b.log.Debug(ctx, fmt.Sprintf(
+		"adding %v into current expense with user_id  %d and category_id %d",
 		updateParam.CurrentExpense,
 		updateParam.UserId,
 		updateParam.CategoryId),
@@ -74,6 +76,9 @@ func (b *budget) updateExpenseSQL(ctx context.Context, updateParam entity.Budget
 	if err := tx.Commit(); err != nil {
 		return errors.NewWithCode(codes.CodeSQLTxCommit, err.Error())
 	}
+
+	b.log.Debug(ctx, fmt.Sprintf("success to update expense with body: %v", updateParam))
+
 	return nil
 }
 
@@ -112,4 +117,39 @@ func (b *budget) updateSQL(ctx context.Context, updateParam entity.BudgetUpdateP
 	b.log.Debug(ctx, fmt.Sprintf("success to update budget with body: %v", updateParam))
 
 	return nil
+}
+
+func (b budget) getAllSQL(ctx context.Context, budgetParam entity.BudgetParam) ([]entity.Budget, error) {
+	var budgets []entity.Budget
+
+	b.log.Debug(ctx, fmt.Sprintf("get all budget with param: %v", budgetParam))
+
+	qb := query.NewSQLQueryBuilder(b.db, "param", "db", &budgetParam.Option)
+
+	queryExt, queryArgs, _, _, err := qb.Build(&budgetParam)
+	if err != nil {
+		return budgets, errors.NewWithCode(codes.CodeSQLBuilder, err.Error())
+	}
+
+	rows, err := b.db.Query(ctx, "rBudgetAll", readBudget+queryExt, queryArgs...)
+	if err != nil {
+		return budgets, errors.NewWithCode(codes.CodeSQLRead, err.Error())
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		budget := entity.Budget{}
+
+		err := rows.StructScan(&budget)
+		if err != nil {
+			b.log.Error(ctx, codes.CodeSQLRowScan)
+			continue
+		}
+
+		budgets = append(budgets, budget)
+	}
+
+	b.log.Debug(ctx, fmt.Sprintf("success to get budgets with param: %v", budgetParam))
+
+	return budgets, nil
 }
