@@ -13,7 +13,7 @@ import (
 )
 
 func (m *money) createSql(ctx context.Context, param entity.MoneyInputParam) error {
-	m.log.Info(ctx, fmt.Sprintf("create money with body = %v", param))
+	m.log.Debug(ctx, fmt.Sprintf("create money with body: %v", param))
 
 	tx, err := m.db.Leader().BeginTx(ctx, "txMoney", sql.TxOptions{})
 	if err != nil {
@@ -40,6 +40,9 @@ func (m *money) createSql(ctx context.Context, param entity.MoneyInputParam) err
 	if err := tx.Commit(); err != nil {
 		return errors.NewWithCode(codes.CodeSQLTxCommit, err.Error())
 	}
+	
+	m.log.Debug(ctx, fmt.Sprintf("success to create money with body: %v", param))
+
 	return nil
 }
 
@@ -78,7 +81,7 @@ func (m *money) getSQL(ctx context.Context, param entity.MoneyParam) (entity.Mon
 }
 
 func (m *money) updateSQL(ctx context.Context, updateParam entity.MoneyUpdateParam, moneyParam entity.MoneyParam) error {
-	m.log.Debug(ctx, fmt.Sprintf("update money with body: %v and param: %v", updateParam, moneyParam))
+	m.log.Debug(ctx, fmt.Sprintf("update money with body %v and param %v", updateParam, moneyParam))
 
 	qb := query.NewSQLQueryBuilder(m.db, "param", "db", &moneyParam.Option)
 

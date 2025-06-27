@@ -34,6 +34,8 @@ func (h *historyBudget) createBatchSQL(ctx context.Context, params []entity.Hist
 	if err := tx.Commit(); err != nil {
 		return errors.NewWithCode(codes.CodeSQLTxCommit, err.Error())
 	}
+
+	h.log.Debug(ctx, fmt.Sprintf("success to create histoy budgets with body: %v", params))
 	
 	return nil
 }

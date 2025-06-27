@@ -13,7 +13,7 @@ import (
 )
 
 func (b *budget) CreateSQL(ctx context.Context, param entity.BudgetInputParam) error {
-	b.log.Info(ctx, fmt.Sprintf("create budget with body: %v", param))
+	b.log.Debug(ctx, fmt.Sprintf("create budget with body: %v", param))
 
 	tx, err := b.db.Leader().BeginTx(ctx, "txBudget", sql.TxOptions{})
 	if err != nil {
@@ -41,12 +41,14 @@ func (b *budget) CreateSQL(ctx context.Context, param entity.BudgetInputParam) e
 		return errors.NewWithCode(codes.CodeSQLTxCommit, err.Error())
 	}
 
+	b.log.Debug(ctx, fmt.Sprintf("success to create budget with body: %v", param))
+
 	return nil
 }
 
 func (b *budget) updateExpenseSQL(ctx context.Context, updateParam entity.BudgetUpdateParam) error {
-	b.log.Info(ctx, fmt.Sprintf(
-		"adding %v into current expense with user_id = %d and category_id = %d",
+	b.log.Debug(ctx, fmt.Sprintf(
+		"adding %v into current expense with user_i  %d and category_id %d",
 		updateParam.CurrentExpense,
 		updateParam.UserId,
 		updateParam.CategoryId),
@@ -74,6 +76,9 @@ func (b *budget) updateExpenseSQL(ctx context.Context, updateParam entity.Budget
 	if err := tx.Commit(); err != nil {
 		return errors.NewWithCode(codes.CodeSQLTxCommit, err.Error())
 	}
+
+	b.log.Debug(ctx, fmt.Sprintf("success to update expense with body: %v", updateParam))
+
 	return nil
 }
 
@@ -117,7 +122,7 @@ func (b *budget) updateSQL(ctx context.Context, updateParam entity.BudgetUpdateP
 func (b budget) getAllSQL(ctx context.Context, budgetParam entity.BudgetParam) ([]entity.Budget, error) {
 	var budgets []entity.Budget
 
-	b.log.Debug(ctx, fmt.Sprintf("get all budget with param %v: ", budgetParam))
+	b.log.Debug(ctx, fmt.Sprintf("get all budget with param: %v", budgetParam))
 
 	qb := query.NewSQLQueryBuilder(b.db, "param", "db", &budgetParam.Option)
 
