@@ -80,7 +80,7 @@ func (s *scheduler) assignScheduledTask() {
 			TimeType:      schedulerTypeMonthly,
 			ScheduledTime: "23:59",
 		},
-		s.uc.Budget.WeeklyResetScheduler,
+		s.uc.Budget.MonthlyResetScheduler,
 	)
 }
 
