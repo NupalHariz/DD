@@ -1,8 +1,6 @@
 package rest
 
 import (
-	"context"
-
 	"github.com/NupalHariz/DD/src/business/dto"
 	"github.com/gin-gonic/gin"
 	"github.com/reyhanmichiels/go-pkg/v2/codes"
@@ -28,7 +26,7 @@ func (r *rest) CreateBudget(ctx *gin.Context) {
 func (r *rest) UpdateBudget(ctx *gin.Context) {
 	var param dto.UpdateBudgetParam
 
-	if  err := r.Bind(ctx, &param); err != nil{
+	if err := r.Bind(ctx, &param); err != nil {
 		r.httpRespError(ctx, err)
 		return
 	}
@@ -39,16 +37,6 @@ func (r *rest) UpdateBudget(ctx *gin.Context) {
 	}
 
 	err := r.uc.Budget.Update(ctx, param)
-	if err != nil {
-		r.httpRespError(ctx, err)
-		return
-	}
-
-	r.httpRespSuccess(ctx, codes.CodeSuccess, nil, nil)
-}
-
-func (r *rest) Test(ctx *gin.Context) {
-	err := r.uc.Budget.WeeklyResetScheduler(context.Background())
 	if err != nil {
 		r.httpRespError(ctx, err)
 		return
