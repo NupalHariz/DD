@@ -33,7 +33,7 @@ func Init(param InitParam) Interface {
 }
 
 func (b *budget) Create(ctx context.Context, param entity.BudgetInputParam) error {
-	err := b.CreateSQL(ctx, param)
+	err := b.createSQL(ctx, param)
 	if err != nil {
 		return err
 	}

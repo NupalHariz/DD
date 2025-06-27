@@ -12,7 +12,7 @@ import (
 	"github.com/reyhanmichiels/go-pkg/v2/sql"
 )
 
-func (b *budget) CreateSQL(ctx context.Context, param entity.BudgetInputParam) error {
+func (b *budget) createSQL(ctx context.Context, param entity.BudgetInputParam) error {
 	b.log.Debug(ctx, fmt.Sprintf("create budget with body: %v", param))
 
 	tx, err := b.db.Leader().BeginTx(ctx, "txBudget", sql.TxOptions{})
