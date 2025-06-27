@@ -28,14 +28,14 @@ func (h *historyBudget) createBatchSQL(ctx context.Context, params []entity.Hist
 	if err != nil {
 		return errors.NewWithCode(codes.CodeSQLNoRowsAffected, err.Error())
 	} else if rowCount < 1 {
-		return errors.NewWithCode(codes.CodeSQLNoRowsAffected, "no history budget createad")
+		return errors.NewWithCode(codes.CodeSQLNoRowsAffected, "no history budget created")
 	}
 
 	if err := tx.Commit(); err != nil {
 		return errors.NewWithCode(codes.CodeSQLTxCommit, err.Error())
 	}
 
-	h.log.Debug(ctx, fmt.Sprintf("success to create histoy budgets with body: %v", params))
+	h.log.Debug(ctx, fmt.Sprintf("success to create history budgets with body: %v", params))
 	
 	return nil
 }

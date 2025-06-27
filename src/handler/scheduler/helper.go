@@ -38,13 +38,13 @@ func (s *scheduler) assignTask(conf SchedulerTaskConf, task handlerFunc) {
 	if conf.Enabled {
 		var err error
 		ctx := context.Background()
-		shcedulerFunc := s.taskWrapper(conf, task)
+		schedulerFunc := s.taskWrapper(conf, task)
 
 		switch conf.TimeType {
 		case schedulerTypeWeekly:
-			_, err = s.cron.Every(1).Week().Sunday().Tag(conf.Name).At(conf.ScheduledTime).Do(shcedulerFunc)
+			_, err = s.cron.Every(1).Week().Sunday().Tag(conf.Name).At(conf.ScheduledTime).Do(schedulerFunc)
 		case schedulerTypeMonthly:
-			_, err = s.cron.Every(1).Month(-1).Tag(conf.Name).At(conf.ScheduledTime).Do(shcedulerFunc)
+			_, err = s.cron.Every(1).Month(-1).Tag(conf.Name).At(conf.ScheduledTime).Do(schedulerFunc)
 		}
 
 		if err != nil {

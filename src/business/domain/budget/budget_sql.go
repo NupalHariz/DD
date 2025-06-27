@@ -48,7 +48,7 @@ func (b *budget) createSQL(ctx context.Context, param entity.BudgetInputParam) e
 
 func (b *budget) updateExpenseSQL(ctx context.Context, updateParam entity.BudgetUpdateParam) error {
 	b.log.Debug(ctx, fmt.Sprintf(
-		"adding %v into current expense with user_i  %d and category_id %d",
+		"adding %v into current expense with user_id  %d and category_id %d",
 		updateParam.CurrentExpense,
 		updateParam.UserId,
 		updateParam.CategoryId),
