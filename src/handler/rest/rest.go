@@ -145,6 +145,7 @@ func (r *rest) Register() {
 
 	// daily assignment api
 	v1.POST("/daily-assignments/", r.CreateDailyAssignment)
+	v1.PUT("/daily-assignments/:id", r.UpdateDailyAssignment)
 }
 
 func (r *rest) Run() {

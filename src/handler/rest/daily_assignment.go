@@ -22,3 +22,25 @@ func (r *rest) CreateDailyAssignment(ctx *gin.Context) {
 
 	r.httpRespSuccess(ctx, codes.CodeCreated, nil, nil)
 }
+
+func (r *rest) UpdateDailyAssignment(ctx *gin.Context) {
+	var param dto.UpdateDailyAssignmentParam
+
+	if err := r.Bind(ctx, &param); err != nil {
+		r.httpRespError(ctx, err)
+		return
+	}
+
+	if err := r.BindUri(ctx, &param); err != nil {
+		r.httpRespError(ctx, err)
+		return
+	}
+
+	err := r.uc.DailyAssignment.Update(ctx, param)
+	if err != nil {
+		r.httpRespError(ctx, err)
+		return
+	}
+
+	r.httpRespSuccess(ctx, codes.CodeSuccess, nil, nil)
+}

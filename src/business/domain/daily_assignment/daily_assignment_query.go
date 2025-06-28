@@ -12,4 +12,9 @@ const(
 			:name
 		)
 	`
+
+	updateDailyAssignment=`
+		UPDATE
+			daily_assignments
+	`
 )
