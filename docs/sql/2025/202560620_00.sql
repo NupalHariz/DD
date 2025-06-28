@@ -53,7 +53,7 @@ CREATE TABLE
 DROP TABLE IF EXISTS `assignment_categories`;
 
 CREATE TABLE
-    IF NOT EXISTS `assigment_categories` (
+    IF NOT EXISTS `assignment_categories` (
         id INT PRIMARY KEY AUTO_INCREMENT,
         user_id INT NOT NULL,
         name VARCHAR(255) NOT NULL
