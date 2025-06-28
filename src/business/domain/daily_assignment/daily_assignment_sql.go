@@ -62,7 +62,7 @@ func (d *dailyAssignment) updateSQL(
 	if err != nil {
 		return errors.NewWithCode(codes.CodeSQLTxBegin, err.Error())
 	}
-	defer tx.Commit()
+	defer tx.Rollback()
 
 	res, err := tx.Exec("uDailyAssignment", updateDailyAssignment+queryUpdate, queryArgs...)
 	if err != nil {
