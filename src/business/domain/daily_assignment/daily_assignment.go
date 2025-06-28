@@ -10,6 +10,7 @@ import (
 
 type Interface interface {
 	Create(ctx context.Context, param entity.DailyAssignmentInputParam) error
+	Update(ctx context.Context, updateParam entity.DailyAssignmentUpdateParam, dailyAssignmentParam entity.DailyAssignmentParam) error
 }
 
 type dailyAssignment struct {
@@ -31,6 +32,19 @@ func Init(param InitParam) Interface {
 
 func (d *dailyAssignment) Create(ctx context.Context, param entity.DailyAssignmentInputParam) error {
 	err := d.createSQL(ctx, param)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (d *dailyAssignment) Update(
+	ctx context.Context,
+	updateParam entity.DailyAssignmentUpdateParam,
+	dailyAssignmentParam entity.DailyAssignmentParam,
+) error {
+	err := d.updateSQL(ctx, updateParam, dailyAssignmentParam)
 	if err != nil {
 		return err
 	}
