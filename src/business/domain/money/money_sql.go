@@ -116,3 +116,51 @@ func (m *money) updateSQL(ctx context.Context, updateParam entity.MoneyUpdatePar
 
 	return nil
 }
+
+func (m *money) getAllSQL(ctx context.Context, param entity.MoneyParam) ([]entity.Money, error) {
+	var moneys []entity.Money
+	var pg entity.Pagination
+
+	m.log.Debug(ctx, fmt.Sprintf("get all money with param: %v", param))
+
+	qb := query.NewSQLQueryBuilder(m.db, "param", "db", &param.Option)
+
+	queryExt, queryArgs, countExt, countArgs, err := qb.Build(&param)
+	if err != nil {
+		return moneys, errors.NewWithCode(codes.CodeSQLBuilder, err.Error())
+	}
+
+	rows, err := m.db.Query(ctx, "raMoney", readMoney+queryExt, queryArgs...)
+	if err != nil {
+		return moneys, errors.NewWithCode(codes.CodeSQLRead, err.Error())
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var money entity.Money
+		err := rows.StructScan(&money)
+		if err != nil {
+			return moneys, errors.NewWithCode(codes.CodeSQLRowScan, err.Error())
+		}
+
+		moneys = append(moneys, money)
+	}
+
+	pg = entity.Pagination{
+		CurrentPage: param.PaginationParam.Page,
+		CurrentElements: int64(len(moneys)),
+	}
+
+	if !param.Option.DisableLimit && len(moneys) > 0 {
+		err := m.db.Get(ctx, "pMoney", countMoney+countExt, &pg.TotalElements, countArgs...)
+		if err != nil {
+			return moneys, errors.NewWithCode(codes.CodeSQLRead, err.Error())
+		}
+	}
+
+	pg.ProcessPagination(param.Limit)
+
+	m.log.Debug(ctx, fmt.Sprintf("success to get all money with param: %v", param))
+
+	return moneys, nil
+}

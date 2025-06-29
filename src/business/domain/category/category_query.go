@@ -10,4 +10,13 @@ const (
 			:name
 		)
 	`
+
+	readCategories = `
+		SELECT
+			id,
+			user_id,
+			name
+		FROM
+			categories
+	`
 )

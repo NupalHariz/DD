@@ -10,6 +10,7 @@ import (
 
 type Interface interface {
 	Create(ctx context.Context, param entity.CategoryInputParam) (entity.Category, error)
+	GetAll(ctx context.Context, param entity.CategoryParam) ([]entity.Category, error)
 }
 
 type category struct {
@@ -36,4 +37,13 @@ func (c *category) Create(ctx context.Context, param entity.CategoryInputParam) 
 	}
 
 	return category, nil
+}
+
+func (c *category) GetAll(ctx context.Context, param entity.CategoryParam) ([]entity.Category, error) {
+	categories, err := c.getAllSQL(ctx, param)
+	if err != nil {
+		return categories, err
+	}
+
+	return categories, nil
 }

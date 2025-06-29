@@ -44,3 +44,20 @@ func (r *rest) UpdateTransaction(ctx *gin.Context) {
 
 	r.httpRespSuccess(ctx, codes.CodeSuccess, nil, nil)
 }
+
+func (r *rest) GetTransaction(ctx *gin.Context) {
+	var param dto.GetTransactionParam
+
+	if err := r.BindQuery(ctx, &param); err != nil {
+		r.httpRespError(ctx, err)
+		return
+	}
+
+	data, err := r.uc.Money.GetTransaction(ctx.Request.Context(), param)
+	if err != nil {
+		r.httpRespError(ctx, err)
+		return
+	}
+
+	r.httpRespSuccess(ctx, codes.CodeSuccess, data, nil)
+}

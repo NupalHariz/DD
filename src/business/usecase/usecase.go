@@ -39,7 +39,7 @@ func Init(param InitParam) *Usecases {
 		User:               user.Init(user.InitParam{UserDomain: param.Dom.User, Auth: param.Auth, Hash: param.Hash}),
 		Category:           category.Init(category.InitParam{CategoryDom: param.Dom.Category, BudgetDom: param.Dom.Budget, Auth: param.Auth}),
 		Budget:             budget.Init(budget.InitParam{Auth: param.Auth, BudgetDom: param.Dom.Budget, HistoryBudgetDom: param.Dom.HistoryBudget}),
-		Money:              money.Init(money.InitParam{Auth: param.Auth, MoneyDom: param.Dom.Money, BudgetDom: param.Dom.Budget}),
+		Money:              money.Init(money.InitParam{Auth: param.Auth, MoneyDom: param.Dom.Money, BudgetDom: param.Dom.Budget, CategoryDom: param.Dom.Category}),
 		DailyAssignment:    dailyassignment.Init(dailyassignment.InitParam{Auth: param.Auth, DailyAssignmentDom: param.Dom.DailyAssignment}),
 		AssignmentCategory: assignmentcategory.Init(assignmentcategory.InitParam{Auth: param.Auth, AssignmentCategoryDom: param.Dom.AssignmentCategory}),
 		Assignment:         assignment.Init(assignment.InitParam{Auth: param.Auth, Assignment: param.Dom.Assignment}),

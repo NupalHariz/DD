@@ -142,6 +142,7 @@ func (r *rest) Register() {
 	// money api
 	v1.POST("/moneys/", r.AddTransaction)
 	v1.PUT("/moneys/:id", r.UpdateTransaction)
+	v1.GET("/moneys", r.GetTransaction)
 
 	// daily assignment api
 	v1.POST("/daily-assignments/", r.CreateDailyAssignment)
