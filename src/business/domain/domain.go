@@ -1,6 +1,7 @@
 package domain
 
 import (
+	"github.com/NupalHariz/DD/src/business/domain/assignment"
 	assignmentcategory "github.com/NupalHariz/DD/src/business/domain/assignment_category"
 	"github.com/NupalHariz/DD/src/business/domain/budget"
 	"github.com/NupalHariz/DD/src/business/domain/category"
@@ -23,6 +24,7 @@ type Domains struct {
 	HistoryBudget      historybudget.Interface
 	DailyAssignment    dailyassignment.Interface
 	AssignmentCategory assignmentcategory.Interface
+	Assignment         assignment.Interface
 }
 
 type InitParam struct {
@@ -42,5 +44,6 @@ func Init(param InitParam) *Domains {
 		HistoryBudget:      historybudget.Init(historybudget.InitParam{Db: param.Db, Log: param.Log}),
 		DailyAssignment:    dailyassignment.Init(dailyassignment.InitParam{Db: param.Db, Log: param.Log}),
 		AssignmentCategory: assignmentcategory.Init(assignmentcategory.InitParam{Db: param.Db, Log: param.Log}),
+		Assignment:         assignment.Init(assignment.InitParam{Db: param.Db, Log: param.Log}),
 	}
 }
