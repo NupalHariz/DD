@@ -134,6 +134,7 @@ func (r *rest) Register() {
 
 	// category api
 	v1.POST("/categories/", r.CreateCategory)
+	v1.GET("/categories/", r.GetAllCategory)
 
 	// budget api
 	// v1.POST("/budgets/", r.CreateBudget)

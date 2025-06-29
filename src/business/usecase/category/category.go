@@ -13,6 +13,7 @@ import (
 
 type Interface interface {
 	Create(ctx context.Context, param dto.CreateCategoryParam) error
+	GetAll(ctx context.Context) ([]dto.GetAllCategoryResponse, error)
 }
 
 type category struct {
@@ -63,4 +64,34 @@ func (c *category) Create(ctx context.Context, param dto.CreateCategoryParam) er
 	}
 
 	return nil
+}
+
+func (c *category) GetAll(ctx context.Context) ([]dto.GetAllCategoryResponse, error) {
+	var datas []dto.GetAllCategoryResponse
+
+	loginUser, err := c.auth.GetUserAuthInfo(ctx)
+	if err != nil {
+		return datas, err
+	}
+
+	categories, err := c.categoryDom.GetAll(
+		ctx,
+		entity.CategoryParam{
+			UserId: loginUser.ID,
+		},
+	)
+	if err != nil {
+		return datas, err
+	}
+
+	for _, c := range categories {
+		data := dto.GetAllCategoryResponse{
+			Id:   c.Id,
+			Name: c.Name,
+		}
+
+		datas = append(datas, data)
+	}
+
+	return datas, nil
 }

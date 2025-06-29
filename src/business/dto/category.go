@@ -12,3 +12,8 @@ func (c *CreateCategoryParam) ToCategoryInputParam(userId int64) entity.Category
 		UserId: userId,
 	}
 }
+
+type GetAllCategoryResponse struct {
+	Id   int64  `json:"id"`
+	Name string `json:"name"`
+}
