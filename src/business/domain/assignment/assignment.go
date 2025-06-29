@@ -10,6 +10,7 @@ import (
 
 type Interface interface {
 	Create(ctx context.Context, param entity.AssignmentInputParam) error
+	Update(ctx context.Context, updateParam entity.AssignmentUpdateParam, assignmentParam entity.AssignmentParam) error
 }
 
 type assignment struct {
@@ -34,6 +35,15 @@ func (a *assignment) Create(ctx context.Context, param entity.AssignmentInputPar
 	if err != nil {
 		return err
 	}
-	
+
+	return nil
+}
+
+func (a *assignment) Update(ctx context.Context, updateParam entity.AssignmentUpdateParam, assignmentParam entity.AssignmentParam) error {
+	err := a.updateSQL(ctx, updateParam, assignmentParam)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }

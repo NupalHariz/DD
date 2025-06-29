@@ -19,4 +19,9 @@ const (
 				:priority
 			)
 	`
+
+	updateAssignment = `
+		UPDATE
+			assignments
+	`
 )
