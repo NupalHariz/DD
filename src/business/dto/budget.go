@@ -29,3 +29,16 @@ func (u *UpdateBudgetParam) ToBudgetUpdateParam() entity.BudgetUpdateParam {
 		Type:   entity.BudgetType(u.Type),
 	}
 }
+
+type GetAllBudgetResponse struct {
+	Id             int64             `db:"id"`
+	Category       string            `db:"category"`
+	Amount         int64             `db:"amount"`
+	CurrentExpense int64             `db:"current_expense"`
+	Type           entity.BudgetType `db:"time_period"`
+}
+
+type GetBudgetParam struct {
+	Type string `json:"type"`
+	entity.PaginationParam
+}

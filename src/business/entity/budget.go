@@ -40,9 +40,11 @@ type BudgetUpdateParam struct {
 
 type BudgetParam struct {
 	Id     int64   `db:"id" param:"id"`
+	UserId int64   `db:"user_id" param:"id"`
 	Type   string  `db:"time_period"`
 	Ids    []int64 `db:"id" param:"id"`
 	Option query.Option
+	PaginationParam
 }
 
 func (b *Budget) ToHistoryBudget(periodStart, periodEnd time.Time) HistoryBudget {
