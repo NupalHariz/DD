@@ -63,7 +63,7 @@ DROP TABLE IF EXISTS `assignments`;
 
 CREATE TABLE
     IF NOT EXISTS `assignments` (
-        id INT PRIMARY KEY NOT NULL,
+        id INT PRIMARY KEY AUTO_INCREMENT,
         user_id VARCHAR(36) NOT NULL,
         name VARCHAR(36) NOT NULL,
         deadline DATETIME NOT NULL,
