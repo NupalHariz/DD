@@ -1,6 +1,10 @@
 package entity
 
-import "time"
+import (
+	"time"
+
+	"github.com/reyhanmichiels/go-pkg/v2/query"
+)
 
 type Status string
 type Priority string
@@ -25,10 +29,23 @@ type Assignment struct {
 }
 
 type AssignmentInputParam struct {
-	UserId     int64     `db:"user_id"`
-	CategoryId int64     `db:"category_id"`
-	Name       string    `db:"name"`
-	Deadline   string `db:"deadline"`
-	Status     Status    `db:"status"`
-	Priority   Priority  `db:"priority"`
+	UserId     int64    `db:"user_id"`
+	CategoryId int64    `db:"category_id"`
+	Name       string   `db:"name"`
+	Deadline   string   `db:"deadline"`
+	Status     Status   `db:"status"`
+	Priority   Priority `db:"priority"`
+}
+
+type AssignmentUpdateParam struct {
+	CategoryId int64    `db:"category_id"`
+	Name       string   `db:"name"`
+	Deadline   string   `db:"deadline"`
+	Status     Status   `db:"status"`
+	Priority   Priority `db:"priority"`
+}
+
+type AssignmentParam struct {
+	Id     int64 `db:"id" param:"id"`
+	Option query.Option
 }

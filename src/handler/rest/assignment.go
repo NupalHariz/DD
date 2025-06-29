@@ -22,3 +22,25 @@ func (r *rest) CreateAssignment(ctx *gin.Context) {
 
 	r.httpRespSuccess(ctx, codes.CodeCreated, nil, nil)
 }
+
+func (r *rest) UpdateAssignment(ctx *gin.Context) {
+	var param dto.UpdateAssignmentParam
+
+	if err := r.Bind(ctx, &param); err != nil {
+		r.httpRespError(ctx, err)
+		return
+	}
+
+	if err := r.BindUri(ctx, &param); err != nil {
+		r.httpRespError(ctx, err)
+		return
+	}
+
+	err := r.uc.Assignment.Update(ctx.Request.Context(), param)
+	if err != nil {
+		r.httpRespError(ctx, err)
+		return
+	}
+
+	r.httpRespSuccess(ctx, codes.CodeSuccess, nil, nil)
+}
