@@ -22,3 +22,13 @@ func (r *rest) CreateCategory(ctx *gin.Context) {
 
 	r.httpRespSuccess(ctx, codes.CodeCreated, nil, nil)
 }
+
+func (r *rest) GetAllCategory(ctx *gin.Context) {
+	data, err := r.uc.Category.GetAll(ctx.Request.Context())
+	if err != nil {
+		r.httpRespError(ctx, err)
+		return
+	}
+
+	r.httpRespSuccess(ctx, codes.CodeSuccess, data, nil)
+}
