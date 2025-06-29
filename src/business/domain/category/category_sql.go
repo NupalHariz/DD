@@ -62,7 +62,7 @@ func (c *category) createSQL(ctx context.Context, param entity.CategoryInputPara
 func (c *category) getAllSQL(ctx context.Context, param entity.CategoryParam) ([]entity.Category, error) {
 	var categories []entity.Category
 
-	c.log.Debug(ctx, fmt.Sprintf("read all category will param: %v", param))
+	c.log.Debug(ctx, fmt.Sprintf("read all category with param: %v", param))
 
 	qb := query.NewSQLQueryBuilder(c.db, "param", "db", &param.Option)
 
