@@ -12,6 +12,7 @@ type Interface interface {
 	Create(ctx context.Context, param entity.MoneyInputParam) error
 	Get(ctx context.Context, param entity.MoneyParam) (entity.Money, error)
 	Update(ctx context.Context, updateParam entity.MoneyUpdateParam, moneyParam entity.MoneyParam) error
+	GetAll(ctx context.Context, param entity.MoneyParam) ([]entity.Money, error)
 }
 
 type money struct {
@@ -56,4 +57,13 @@ func (m *money) Update(ctx context.Context, updateParam entity.MoneyUpdateParam,
 	}
 
 	return nil
+}
+
+func (m *money) GetAll(ctx context.Context, param entity.MoneyParam) ([]entity.Money, error) {
+	moneys, err := m.getAllSQL(ctx, param)
+	if err != nil {
+		return moneys, err
+	}
+
+	return moneys, err
 }

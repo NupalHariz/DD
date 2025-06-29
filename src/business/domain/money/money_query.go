@@ -30,4 +30,11 @@ const (
 		UPDATE
 			moneys
 	`
+
+	countMoney = `
+		SELECT 
+			COUNT(*)
+		FROM
+			moneys
+	`
 )

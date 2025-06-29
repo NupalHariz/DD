@@ -8,6 +8,7 @@ import (
 	"github.com/NupalHariz/DD/src/business/entity"
 	"github.com/reyhanmichiels/go-pkg/v2/codes"
 	"github.com/reyhanmichiels/go-pkg/v2/errors"
+	"github.com/reyhanmichiels/go-pkg/v2/query"
 	"github.com/reyhanmichiels/go-pkg/v2/sql"
 )
 
@@ -56,4 +57,36 @@ func (c *category) createSQL(ctx context.Context, param entity.CategoryInputPara
 	}
 
 	return category, nil
+}
+
+func (c *category) getAllSQL(ctx context.Context, param entity.CategoryParam) ([]entity.Category, error) {
+	var categories []entity.Category
+
+	c.log.Debug(ctx, fmt.Sprintf("read all category will param: %v", param))
+
+	qb := query.NewSQLQueryBuilder(c.db, "param", "db", &param.Option)
+
+	queryExt, queryArgs, _, _, err := qb.Build(&param)
+	if err != nil {
+		return categories, errors.NewWithCode(codes.CodeSQLBuilder, err.Error())
+	}
+
+	rows, err := c.db.Query(ctx, "raCategory", readCategories+queryExt, queryArgs...)
+	if err != nil {
+		return categories, errors.NewWithCode(codes.CodeSQLRead, err.Error())
+	}
+
+	for rows.Next(){
+		var category entity.Category
+		err := rows.StructScan(&category)
+		if err != nil {
+			return categories, errors.NewWithCode(codes.CodeSQLRowScan, err.Error())
+		}
+
+		categories = append(categories, category)
+	}
+
+	c.log.Debug(ctx, fmt.Sprintf("success to get all category with param: %v", param))
+
+	return categories, nil
 }

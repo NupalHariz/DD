@@ -31,3 +31,17 @@ func (u *UpdateTransactionParam) ToMoneyUpdateParam() entity.MoneyUpdateParam {
 		Type:       entity.MoneyType(u.Type),
 	}
 }
+
+type GetTransactionParam struct {
+	CategoryId int64  `form:"category_id"`
+	Type       string `form:"type"`
+	entity.PaginationParam
+}
+
+type GetTransactionResponse struct {
+	Id       int64            `json:"id"`
+	UserId   int64            `json:"user_id"`
+	Amount   int64            `json:"amount"`
+	Category string           `json:"category_id"`
+	Type     entity.MoneyType `json:"type"`
+}

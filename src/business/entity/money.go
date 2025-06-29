@@ -31,6 +31,10 @@ type MoneyUpdateParam struct {
 }
 
 type MoneyParam struct {
-	Id     int64 `db:"id" param:"id"`
-	Option query.Option
+	Id         int64     `db:"id" param:"id"`
+	UserId     int64     `db:"user_id" param:"user_id"`
+	CategoryId int64     `db:"category_id" param:"category_id"`
+	Type       MoneyType `db:"type" param:"type"`
+	Option     query.Option
+	PaginationParam
 }

@@ -1,5 +1,7 @@
 package entity
 
+import "github.com/reyhanmichiels/go-pkg/v2/query"
+
 type Category struct {
 	Id     int64  `db:"id"`
 	UserId int64  `db:"user_id"`
@@ -9,4 +11,9 @@ type Category struct {
 type CategoryInputParam struct {
 	UserId int64  `db:"user_id"`
 	Name   string `db:"name"`
+}
+
+type CategoryParam struct {
+	Ids []int64 `db:"id" param:"id"`
+	Option query.Option
 }
