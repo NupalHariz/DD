@@ -1,6 +1,7 @@
 package usecase
 
 import (
+	"github.com/NupalHariz/DD/src/business/usecase/assignment"
 	assignmentcategory "github.com/NupalHariz/DD/src/business/usecase/assignment_category"
 	"github.com/NupalHariz/DD/src/business/usecase/budget"
 	"github.com/NupalHariz/DD/src/business/usecase/category"
@@ -22,6 +23,7 @@ type Usecases struct {
 	Money              money.Interface
 	DailyAssignment    dailyassignment.Interface
 	AssignmentCategory assignmentcategory.Interface
+	Assignment         assignment.Interface
 }
 
 type InitParam struct {
@@ -40,5 +42,6 @@ func Init(param InitParam) *Usecases {
 		Money:              money.Init(money.InitParam{Auth: param.Auth, MoneyDom: param.Dom.Money, BudgetDom: param.Dom.Budget}),
 		DailyAssignment:    dailyassignment.Init(dailyassignment.InitParam{Auth: param.Auth, DailyAssignmentDom: param.Dom.DailyAssignment}),
 		AssignmentCategory: assignmentcategory.Init(assignmentcategory.InitParam{Auth: param.Auth, AssignmentCategoryDom: param.Dom.AssignmentCategory}),
+		Assignment:         assignment.Init(assignment.InitParam{Auth: param.Auth, Assignment: param.Dom.Assignment}),
 	}
 }

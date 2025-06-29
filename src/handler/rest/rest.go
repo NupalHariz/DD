@@ -149,6 +149,9 @@ func (r *rest) Register() {
 
 	// assignment category
 	v1.POST("/assignment-categories/", r.CreateAssignmentCategory)
+
+	// assignment
+	v1.POST("/assignments/", r.CreateAssignment)
 }
 
 func (r *rest) Run() {

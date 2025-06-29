@@ -16,10 +16,19 @@ const (
 
 type Assignment struct {
 	Id         int64     `db:"id"`
-	UserId     int64    `db:"user_id"`
+	UserId     int64     `db:"user_id"`
 	Name       string    `db:"name"`
 	Deadline   time.Time `db:"deadline"`
 	Status     Status    `db:"status"`
 	Priority   Priority  `db:"priority"`
 	CategoryId int64     `db:"category_id"`
+}
+
+type AssignmentInputParam struct {
+	UserId     int64     `db:"user_id"`
+	CategoryId int64     `db:"category_id"`
+	Name       string    `db:"name"`
+	Deadline   string `db:"deadline"`
+	Status     Status    `db:"status"`
+	Priority   Priority  `db:"priority"`
 }
