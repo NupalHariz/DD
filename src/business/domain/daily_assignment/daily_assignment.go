@@ -11,6 +11,7 @@ import (
 type Interface interface {
 	Create(ctx context.Context, param entity.DailyAssignmentInputParam) error
 	Update(ctx context.Context, updateParam entity.DailyAssignmentUpdateParam, dailyAssignmentParam entity.DailyAssignmentParam) error
+	GetAll(ctx context.Context, param entity.DailyAssignmentParam) ([]entity.DailyAssignment, error)
 }
 
 type dailyAssignment struct {
@@ -50,4 +51,13 @@ func (d *dailyAssignment) Update(
 	}
 
 	return nil
+}
+
+func (d *dailyAssignment) GetAll(ctx context.Context, param entity.DailyAssignmentParam) ([]entity.DailyAssignment, error) {
+	data, err := d.getAllSQL(ctx, param)
+	if err != nil {
+		return []entity.DailyAssignment{}, err
+	}
+
+	return data, nil
 }

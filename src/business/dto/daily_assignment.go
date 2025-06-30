@@ -28,3 +28,9 @@ func (u *UpdateDailyAssignmentParam) ToDailyAssignmentUpdateParam() entity.Daily
 		IsDone: null.BoolFrom(u.IsDone),
 	}
 }
+
+type GetAllDailyAssignmentResponse struct {
+	Id     int64  `json:"id"`
+	Name   string `json:"name"`
+	IsDone bool   `json:"is_done"`
+}

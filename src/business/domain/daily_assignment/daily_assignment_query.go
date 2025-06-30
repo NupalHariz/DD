@@ -1,7 +1,7 @@
 package dailyassignment
 
-const(
-	insertDailyAssignment=`
+const (
+	insertDailyAssignment = `
 		INSERT INTO
 			daily_assignments(
 				user_id,
@@ -13,8 +13,18 @@ const(
 		)
 	`
 
-	updateDailyAssignment=`
+	updateDailyAssignment = `
 		UPDATE
+			daily_assignments
+	`
+
+	readDailyAssignment = `
+		SELECT
+			id,
+			user_id,
+			name,
+			is_done
+		FROM
 			daily_assignments
 	`
 )
