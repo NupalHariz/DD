@@ -82,3 +82,35 @@ func (d *dailyAssignment) updateSQL(
 
 	return nil
 }
+
+func (d *dailyAssignment) getAllSQL(ctx context.Context, param entity.DailyAssignmentParam) ([]entity.DailyAssignment, error) {
+	var dailyAssignments []entity.DailyAssignment
+
+	d.log.Debug(ctx, fmt.Sprintf("get all daily assignment with param: %v", param))
+
+	qb := query.NewSQLQueryBuilder(d.db, "param", "db", &param.Option)
+
+	queryExt, queryArgs, _, _, err := qb.Build(&param)
+	if err != nil {
+		return dailyAssignments, errors.NewWithCode(codes.CodeSQLBuilder, err.Error())
+	}
+
+	rows, err := d.db.Query(ctx, "raDailyAssignment", readDailyAssignment+queryExt, queryArgs...)
+	if err != nil {
+		return dailyAssignments, errors.NewWithCode(codes.CodeSQLRead, err.Error())
+	}
+	defer rows.Close()
+
+	for rows.Next(){
+		var dailyAssignment entity.DailyAssignment
+
+		err = rows.StructScan(&dailyAssignment)
+		if err != nil {
+			return dailyAssignments, errors.NewWithCode(codes.CodeSQLRowScan, err.Error())
+		}
+
+		dailyAssignments = append(dailyAssignments, dailyAssignment)
+	}
+
+	return dailyAssignments, nil
+}

@@ -44,3 +44,13 @@ func (r *rest) UpdateDailyAssignment(ctx *gin.Context) {
 
 	r.httpRespSuccess(ctx, codes.CodeSuccess, nil, nil)
 }
+
+func (r *rest) GetAllDailyAssignment(ctx *gin.Context) {
+	data, err := r.uc.DailyAssignment.GetAll(ctx.Request.Context())
+	if err != nil {
+		r.httpRespError(ctx, err)
+		return
+	}
+
+	r.httpRespSuccess(ctx, codes.CodeSuccess, data, nil)
+}

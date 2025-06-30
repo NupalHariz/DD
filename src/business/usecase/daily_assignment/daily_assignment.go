@@ -12,6 +12,7 @@ import (
 type Interface interface {
 	Create(ctx context.Context, param dto.CreateDailyAssignmentParam) error
 	Update(ctx context.Context, param dto.UpdateDailyAssignmentParam) error
+	GetAll(ctx context.Context) ([]dto.GetAllDailyAssignmentResponse, error)
 }
 
 type dailyAssignment struct {
@@ -56,4 +57,30 @@ func (d *dailyAssignment) Update(ctx context.Context, param dto.UpdateDailyAssig
 	}
 
 	return nil
+}
+
+func (d *dailyAssignment) GetAll(ctx context.Context) ([]dto.GetAllDailyAssignmentResponse, error) {
+	var datas []dto.GetAllDailyAssignmentResponse
+
+	loginUser, err := d.auth.GetUserAuthInfo(ctx)
+	if err != nil {
+		return datas, err
+	}
+
+	dailyAssignments, err := d.dailyAssignmentDom.GetAll(ctx, entity.DailyAssignmentParam{UserId: loginUser.ID})
+	if err != nil {
+		return datas, err
+	}
+
+	for _, d := range dailyAssignments {
+		data := dto.GetAllDailyAssignmentResponse{
+			Id:     d.Id,
+			Name:   d.Name,
+			IsDone: d.IsDone,
+		}
+
+		datas = append(datas, data)
+	}
+
+	return datas, nil
 }
