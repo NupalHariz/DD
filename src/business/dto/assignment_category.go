@@ -12,3 +12,8 @@ func (c *CreateAssignmentCategory) ToAssignmentCategoryInputParam(userId int64) 
 		Name:   c.Name,
 	}
 }
+
+type GetAllAssignmentCategoryResponse struct {
+	Id   int64  `json:"id"`
+	Name string `json:"name"`
+}

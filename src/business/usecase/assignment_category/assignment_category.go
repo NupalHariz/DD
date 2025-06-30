@@ -5,11 +5,13 @@ import (
 
 	assignmentCategoryDom "github.com/NupalHariz/DD/src/business/domain/assignment_category"
 	"github.com/NupalHariz/DD/src/business/dto"
+	"github.com/NupalHariz/DD/src/business/entity"
 	"github.com/reyhanmichiels/go-pkg/v2/auth"
 )
 
 type Interface interface {
 	Create(ctx context.Context, param dto.CreateAssignmentCategory) error
+	GetAll(ctx context.Context) ([]dto.GetAllAssignmentCategoryResponse, error)
 }
 
 type assignmentCategory struct {
@@ -43,4 +45,34 @@ func (a *assignmentCategory) Create(ctx context.Context, param dto.CreateAssignm
 	}
 
 	return nil
+}
+
+func (a *assignmentCategory) GetAll(ctx context.Context) ([]dto.GetAllAssignmentCategoryResponse, error) {
+	var datas []dto.GetAllAssignmentCategoryResponse
+
+	loginUser, err := a.auth.GetUserAuthInfo(ctx)
+	if err != nil {
+		return datas, err
+	}
+
+	assignmentCategories, err := a.assignmentCategoryDom.GetAll(
+		ctx, 
+		entity.AssignmentCategoryParam{
+			UserId: loginUser.ID,
+		},
+	)
+	if err != nil {
+		return datas, err
+	}
+
+	for _, a := range assignmentCategories {
+		data := dto.GetAllAssignmentCategoryResponse{
+			Id: a.Id,
+			Name: a.Name,
+		}
+
+		datas = append(datas, data)
+	}
+
+	return datas, nil
 }
