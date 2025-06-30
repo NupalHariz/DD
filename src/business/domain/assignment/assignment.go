@@ -11,6 +11,7 @@ import (
 type Interface interface {
 	Create(ctx context.Context, param entity.AssignmentInputParam) error
 	Update(ctx context.Context, updateParam entity.AssignmentUpdateParam, assignmentParam entity.AssignmentParam) error
+	GetAll(ctx context.Context, param entity.AssignmentParam) ([]entity.Assignment, error)
 }
 
 type assignment struct {
@@ -46,4 +47,13 @@ func (a *assignment) Update(ctx context.Context, updateParam entity.AssignmentUp
 	}
 
 	return nil
+}
+
+func (a *assignment) GetAll(ctx context.Context, param entity.AssignmentParam) ([]entity.Assignment, error) {
+	assignments, err := a.getAllSQL(ctx, param)
+	if err != nil {
+		return assignments, err
+	}
+
+	return assignments, nil
 }

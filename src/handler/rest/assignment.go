@@ -44,3 +44,20 @@ func (r *rest) UpdateAssignment(ctx *gin.Context) {
 
 	r.httpRespSuccess(ctx, codes.CodeSuccess, nil, nil)
 }
+
+func (r *rest) GetAllAssignment(ctx *gin.Context) {
+	var param dto.GetAllAssignmentParam
+
+	if err := r.BindQuery(ctx, &param); err != nil {
+		r.httpRespError(ctx, err)
+		return
+	}
+
+	datas, err := r.uc.Assignment.GetAll(ctx.Request.Context(), param)
+	if err != nil {
+		r.httpRespError(ctx, err)
+		return
+	}
+
+	r.httpRespSuccess(ctx, codes.CodeSuccess, datas, nil)
+}

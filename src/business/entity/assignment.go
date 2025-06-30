@@ -47,5 +47,7 @@ type AssignmentUpdateParam struct {
 
 type AssignmentParam struct {
 	Id     int64 `db:"id" param:"id"`
+	UserId int64 `db:"user_id" param:"user_id"`
 	Option query.Option
+	PaginationParam
 }

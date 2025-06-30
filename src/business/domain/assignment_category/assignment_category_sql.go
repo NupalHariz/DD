@@ -8,6 +8,7 @@ import (
 	"github.com/NupalHariz/DD/src/business/entity"
 	"github.com/reyhanmichiels/go-pkg/v2/codes"
 	"github.com/reyhanmichiels/go-pkg/v2/errors"
+	"github.com/reyhanmichiels/go-pkg/v2/query"
 	"github.com/reyhanmichiels/go-pkg/v2/sql"
 )
 
@@ -41,4 +42,36 @@ func (a *assignmentCategory) createSQL(ctx context.Context, param entity.Assignm
 	}
 	
 	return nil
+}
+
+func (a *assignmentCategory) getAllSQL(ctx context.Context, param entity.AssignmentCategoryParam) ([]entity.AssignmentCategory, error) {
+	var assignmentCategories []entity.AssignmentCategory
+
+	a.log.Debug(ctx, fmt.Sprintf("get all assignment category with param: %v", param))
+
+	qb := query.NewSQLQueryBuilder(a.db, "param", "db", &param.Option)
+
+	queryExt, queryArgs, _, _, err := qb.Build(&param)
+	if err != nil {
+		return assignmentCategories, errors.NewWithCode(codes.CodeSQLBuilder, err.Error())
+	}
+
+	rows, err := a.db.Query(ctx, "reAssignmentCategory", readAssignmentCategory+queryExt, queryArgs...)
+	if err != nil {
+		return assignmentCategories, errors.NewWithCode(codes.CodeSQLRead, err.Error())
+	}
+	defer rows.Close()
+
+	for rows.Next(){
+		var assignmentCategory entity.AssignmentCategory
+
+		err = rows.StructScan(&assignmentCategory)
+		if err != nil {
+			return assignmentCategories, errors.NewWithCode(codes.CodeSQLRowScan, err.Error())
+		}
+
+		assignmentCategories = append(assignmentCategories, assignmentCategory)
+	}
+
+	return assignmentCategories, nil
 }

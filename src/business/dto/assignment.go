@@ -1,6 +1,8 @@
 package dto
 
 import (
+	"time"
+
 	"github.com/NupalHariz/DD/src/business/entity"
 )
 
@@ -40,4 +42,20 @@ func (c *UpdateAssignmentParam) ToAssignmentUpdateParam() entity.AssignmentUpdat
 		Status:     entity.Status(c.Status),
 		Priority:   entity.Priority(c.Priority),
 	}
+}
+
+type GetAllAssignmentParam struct {
+	CategoryId int64  `query:"category_id"`
+	Status     string `query:"status"`
+	Priority   string `query:"priority"`
+	entity.PaginationParam
+}
+
+type GetAllAssignmentResponse struct {
+	Id       int64     `json:"id"`
+	Category string    `json:"category"`
+	Name     string    `json:"name"`
+	Deadline time.Time `json:"deadline"`
+	Status   string    `json:"status"`
+	Priority string    `json:"priority"`
 }
