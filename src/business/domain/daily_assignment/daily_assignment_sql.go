@@ -133,7 +133,7 @@ func (d *dailyAssignment) updateDailyAssignmentToFalse(ctx context.Context) erro
 	if err != nil {
 		return errors.NewWithCode(codes.CodeSQLNoRowsAffected, err.Error())
 	} else if rowCount < 1 {
-		return errors.NewWithCode(codes.CodeSQLNoRowsAffected, "no daily assignment updated")
+		d.log.Info(ctx, "no daily assignment updated")
 	}
 
 	if err = tx.Commit(); err != nil {
