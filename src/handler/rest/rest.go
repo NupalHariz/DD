@@ -157,6 +157,7 @@ func (r *rest) Register() {
 	// assignment
 	v1.POST("/assignments/", r.CreateAssignment)
 	v1.PUT("/assignments/:id", r.UpdateAssignment)
+	v1.GET("/assignments/", r.GetAllAssignment)
 }
 
 func (r *rest) Run() {

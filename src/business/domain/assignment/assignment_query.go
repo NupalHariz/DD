@@ -24,4 +24,24 @@ const (
 		UPDATE
 			assignments
 	`
+
+	readAssignment = `
+		SELECT
+			id,
+			user_id,
+			category_id,
+			name,
+			deadline,
+			status,
+			priority
+		FROM
+			assignments
+	`
+
+	countAssignments = `
+		SELECT
+			COUNT(*)
+		FROM
+			assignments
+	`
 )

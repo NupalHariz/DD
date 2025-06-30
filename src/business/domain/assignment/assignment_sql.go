@@ -74,3 +74,51 @@ func (a *assignment) updateSQL(ctx context.Context, updateParam entity.Assignmen
 
 	return nil
 }
+
+func (a *assignment) getAllSQL(ctx context.Context, param entity.AssignmentParam) ([]entity.Assignment, error) {
+	var assignments []entity.Assignment
+
+	a.log.Debug(ctx, fmt.Sprintf("get all assignments with param: %v", param))
+
+	qb := query.NewSQLQueryBuilder(a.db, "param", "db", &param.Option)
+
+	queryExt, queryArgs, countExt, countArgs, err := qb.Build(&param)
+	if err != nil {
+		return assignments, errors.NewWithCode(codes.CodeSQLBuilder, err.Error())
+	}
+
+	rows, err := a.db.Query(ctx, "raAssignment", readAssignment+queryExt, queryArgs...)
+	if err != nil {
+		return assignments, errors.NewWithCode(codes.CodeSQLRead, err.Error())
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var assignment entity.Assignment
+
+		err = rows.StructScan(&assignment)
+		if err != nil {
+			return assignments, errors.NewWithCode(codes.CodeSQLRowScan, err.Error())
+		}
+
+		assignments = append(assignments, assignment)
+	}
+
+	pg := entity.Pagination{
+		CurrentPage: param.PaginationParam.Page,
+		CurrentElements: int64(len(assignments)),
+	}
+
+	if !param.Option.DisableLimit && len(assignments) > 0 {
+		err := a.db.Get(ctx, "pAssignments", countAssignments+countExt, &pg.TotalElements, countArgs...)
+		if err != nil {
+			return assignments, errors.NewWithCode(codes.CodeSQLRead, err.Error())
+		}
+	}
+
+	pg.ProcessPagination(param.Limit)
+
+	a.log.Debug(ctx, fmt.Sprintf("success to get assignment with param: %v", param))
+
+	return assignments, nil
+}
