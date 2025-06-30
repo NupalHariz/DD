@@ -114,3 +114,31 @@ func (d *dailyAssignment) getAllSQL(ctx context.Context, param entity.DailyAssig
 
 	return dailyAssignments, nil
 }
+
+func (d *dailyAssignment) updateDailyAssignmentToFalse(ctx context.Context) error {
+	d.log.Debug(ctx, "update daily assigment to false")
+
+	tx, err := d.db.Leader().BeginTx(ctx, "txDailyAssignment", sql.TxOptions{})
+	if err != nil {
+		return errors.NewWithCode(codes.CodeSQLTxBegin, err.Error())
+	}
+	defer tx.Rollback()
+
+	res, err := tx.Exec("utfDailyAssignment", updateDailyAssignmentToFalse)
+	if err != nil {
+		return errors.NewWithCode(codes.CodeSQLTxExec, err.Error())
+	}
+
+	rowCount, err := res.RowsAffected()
+	if err != nil {
+		return errors.NewWithCode(codes.CodeSQLNoRowsAffected, err.Error())
+	} else if rowCount < 1 {
+		return errors.NewWithCode(codes.CodeSQLNoRowsAffected, "no daily assignment updated")
+	}
+
+	if err = tx.Commit(); err != nil {
+		return errors.NewWithCode(codes.CodeSQLTxCommit, err.Error())
+	}
+
+	return nil
+}

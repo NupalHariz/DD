@@ -21,6 +21,7 @@ const (
 
 	schedulerTypeWeekly  string = "weekly"
 	schedulerTypeMonthly string = "monthly"
+	schedulerTypeDaily   string = "daily"
 )
 
 type handlerFunc func(ctx context.Context) error
@@ -47,6 +48,8 @@ func (s *scheduler) assignTask(conf SchedulerTaskConf, task handlerFunc) {
 			_, err = s.cron.Every(1).Week().Sunday().Tag(conf.Name).At(conf.ScheduledTime).Do(schedulerFunc)
 		case schedulerTypeMonthly:
 			_, err = s.cron.Every(1).Month(-1).Tag(conf.Name).At(conf.ScheduledTime).Do(schedulerFunc)
+		case schedulerTypeDaily:
+			_, err = s.cron.Every(1).Day().Tag(conf.Name).At(conf.ScheduledTime).Do(schedulerFunc)
 		default:
 			err = errors.NewWithCode(codes.CodeInternalServerError, "unknown scheduler time type")
 		}

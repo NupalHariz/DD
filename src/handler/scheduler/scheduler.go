@@ -82,6 +82,16 @@ func (s *scheduler) assignScheduledTask() {
 		},
 		s.uc.Budget.MonthlyResetScheduler,
 	)
+
+	s.assignTask(
+		SchedulerTaskConf{
+			Name: "ResetDailyAssignment",
+			Enabled: true,
+			TimeType: schedulerTypeDaily,
+			ScheduledTime: "00:00",
+		},
+		s.uc.DailyAssignment.DailyAssignmentResetScheduler,
+	)
 }
 
 func (s *scheduler) Run() {
