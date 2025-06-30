@@ -99,6 +99,7 @@ func (d *dailyAssignment) getAllSQL(ctx context.Context, param entity.DailyAssig
 	if err != nil {
 		return dailyAssignments, errors.NewWithCode(codes.CodeSQLRead, err.Error())
 	}
+	defer rows.Close()
 
 	for rows.Next(){
 		var dailyAssignment entity.DailyAssignment
