@@ -13,6 +13,7 @@ type Interface interface {
 	Create(ctx context.Context, param dto.CreateDailyAssignmentParam) error
 	Update(ctx context.Context, param dto.UpdateDailyAssignmentParam) error
 	GetAll(ctx context.Context) ([]dto.GetAllDailyAssignmentResponse, error)
+	DailyAssignmentResetScheduler(ctx context.Context) error
 }
 
 type dailyAssignment struct {
@@ -83,4 +84,13 @@ func (d *dailyAssignment) GetAll(ctx context.Context) ([]dto.GetAllDailyAssignme
 	}
 
 	return datas, nil
+}
+
+func (d *dailyAssignment) DailyAssignmentResetScheduler(ctx context.Context) error {
+	err := d.dailyAssignmentDom.UpdateDailyAssignmentToFalse(ctx)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

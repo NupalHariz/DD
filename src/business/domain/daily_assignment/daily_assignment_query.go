@@ -27,4 +27,13 @@ const (
 		FROM
 			daily_assignments
 	`
+
+	updateDailyAssignmentToFalse = `
+		UPDATE
+			daily_assignments
+		SET
+			is_done = false
+		WHERE
+			is_done = true
+	`
 )

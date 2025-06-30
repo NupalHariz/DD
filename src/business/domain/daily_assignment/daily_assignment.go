@@ -12,6 +12,7 @@ type Interface interface {
 	Create(ctx context.Context, param entity.DailyAssignmentInputParam) error
 	Update(ctx context.Context, updateParam entity.DailyAssignmentUpdateParam, dailyAssignmentParam entity.DailyAssignmentParam) error
 	GetAll(ctx context.Context, param entity.DailyAssignmentParam) ([]entity.DailyAssignment, error)
+	UpdateDailyAssignmentToFalse(ctx context.Context) error
 }
 
 type dailyAssignment struct {
@@ -60,4 +61,13 @@ func (d *dailyAssignment) GetAll(ctx context.Context, param entity.DailyAssignme
 	}
 
 	return data, nil
+}
+
+func (d *dailyAssignment) UpdateDailyAssignmentToFalse(ctx context.Context) error {
+	err := d.updateDailyAssignmentToFalse(ctx)
+	if err != nil {
+		return err
+	}
+	
+	return nil
 }
