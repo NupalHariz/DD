@@ -112,7 +112,7 @@ func (m *money) GetAll(ctx context.Context, param entity.MoneyParam) ([]entity.M
 	}
 
 	if !param.BypassCache {
-		moneys, err = m.getCacheList(ctx, fmt.Sprintf(getMoneyByKey, marshalledParam))
+		moneys, err = m.getCacheList(ctx, fmt.Sprintf(getAllMoneyByKey, marshalledParam))
 		switch {
 		case errors.Is(err, redis.Nil):
 			m.log.Warn(ctx, fmt.Sprintf(entity.ErrorRedisNil, err.Error()))
