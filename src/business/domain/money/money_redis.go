@@ -12,7 +12,7 @@ import (
 
 const (
 	getMoneyByKey         = "DD:money:get:%s"
-	getAllMoneyByKey      = "DD:money:gets:%s"
+	getAllMoneyByKey      = "DD:money:getList:%s"
 	deleteMoneyKeyPattern = "DD:money:*"
 )
 
