@@ -83,7 +83,7 @@ func (d *dailyAssignment) GetAll(ctx context.Context, param entity.DailyAssignme
 	}
 
 	if !param.BypassCache {
-		dailyAssignments, err = d.getCacheList(ctx, fmt.Sprintf(getAllDailyAssignmentByKey, marshalledParam))
+		dailyAssignments, err = d.getCacheList(ctx, fmt.Sprintf(getAllDailyAssignmentByKey, string(marshalledParam)))
 		switch {
 		case errors.Is(err, redis.Nil):
 			d.log.Warn(ctx, fmt.Sprintf(entity.ErrorRedisNil, err.Error()))
