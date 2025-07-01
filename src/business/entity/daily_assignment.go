@@ -23,7 +23,8 @@ type DailyAssignmentUpdateParam struct {
 }
 
 type DailyAssignmentParam struct {
-	Id     int64 `db:"id" param:"id"`
-	UserId int64 `db:"user_id" param:"user_id"`
-	Option query.Option
+	Id          int64 `db:"id" param:"id"`
+	UserId      int64 `db:"user_id" param:"user_id"`
+	Option      query.Option
+	BypassCache bool
 }

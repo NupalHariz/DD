@@ -2,9 +2,13 @@ package budget
 
 import (
 	"context"
+	"errors"
+	"fmt"
 
 	"github.com/NupalHariz/DD/src/business/entity"
 	"github.com/reyhanmichiels/go-pkg/v2/log"
+	"github.com/reyhanmichiels/go-pkg/v2/parser"
+	"github.com/reyhanmichiels/go-pkg/v2/redis"
 	"github.com/reyhanmichiels/go-pkg/v2/sql"
 )
 
@@ -16,19 +20,25 @@ type Interface interface {
 }
 
 type budget struct {
-	db  sql.Interface
-	log log.Interface
+	db    sql.Interface
+	log   log.Interface
+	json  parser.JSONInterface
+	redis redis.Interface
 }
 
 type InitParam struct {
-	Db  sql.Interface
-	Log log.Interface
+	Db    sql.Interface
+	Log   log.Interface
+	Json  parser.JSONInterface
+	Redis redis.Interface
 }
 
 func Init(param InitParam) Interface {
 	return &budget{
-		db:  param.Db,
-		log: param.Log,
+		db:    param.Db,
+		log:   param.Log,
+		json:  param.Json,
+		redis: param.Redis,
 	}
 }
 
@@ -37,6 +47,12 @@ func (b *budget) Create(ctx context.Context, param entity.BudgetInputParam) erro
 	if err != nil {
 		return err
 	}
+
+	err = b.deleteCache(ctx, deleteBudgetPattern)
+	if err != nil {
+		b.log.Warn(ctx, fmt.Sprintf(entity.ErrorRedis, err.Error()))
+	}
+
 	return nil
 }
 
@@ -44,6 +60,11 @@ func (b *budget) UpdateExpense(ctx context.Context, updateParam entity.BudgetUpd
 	err := b.updateExpenseSQL(ctx, updateParam)
 	if err != nil {
 		return err
+	}
+
+	err = b.deleteCache(ctx, deleteBudgetPattern)
+	if err != nil {
+		b.log.Warn(ctx, fmt.Sprintf(entity.ErrorRedis, err.Error()))
 	}
 
 	return nil
@@ -55,13 +76,41 @@ func (b *budget) Update(ctx context.Context, updateParam entity.BudgetUpdatePara
 		return err
 	}
 
+	err = b.deleteCache(ctx, deleteBudgetPattern)
+	if err != nil {
+		b.log.Warn(ctx, fmt.Sprintf(entity.ErrorRedis, err.Error()))
+	}
+
 	return nil
 }
 
-func (b *budget) GetAll(ctx context.Context, budgetParam entity.BudgetParam) ([]entity.Budget, error) {
-	budgets, err := b.getAllSQL(ctx, budgetParam)
+func (b *budget) GetAll(ctx context.Context, param entity.BudgetParam) ([]entity.Budget, error) {
+	var budgets []entity.Budget
+	marshalledParam, err := b.json.Marshal(param)
 	if err != nil {
 		return budgets, err
+	}
+
+	if !param.BypassCache {
+		budgets, err = b.getCacheList(ctx, fmt.Sprintf(getAllBudgetByKey, string(marshalledParam)))
+		switch {
+		case errors.Is(err, redis.Nil):
+			b.log.Warn(ctx, fmt.Sprintf(entity.ErrorRedisNil, err.Error()))
+		case err != nil:
+			b.log.Warn(ctx, fmt.Sprintf(entity.ErrorRedis, err.Error()))
+		default:
+			return budgets, nil
+		}
+	}
+
+	budgets, err = b.getAllSQL(ctx, param)
+	if err != nil {
+		return budgets, err
+	}
+
+	err = b.upsertCacheList(ctx, fmt.Sprintf(getAllBudgetByKey, string(marshalledParam)), budgets, b.redis.GetDefaultTTL(ctx))
+	if err != nil {
+		b.log.Error(ctx, fmt.Sprintf(entity.ErrorRedis, err.Error()))
 	}
 
 	return budgets, nil
