@@ -63,7 +63,7 @@ func (c *category) GetAll(ctx context.Context, param entity.CategoryParam) ([]en
 	}
 
 	if !param.BypassCache {
-		categories, err = c.getCacheList(ctx, fmt.Sprintf(getAllCategoryByKey, marshalledParam))
+		categories, err = c.getCacheList(ctx, fmt.Sprintf(getAllCategoryByKey, string(marshalledParam)))
 		switch {
 		case errors.Is(err, redis.Nil):
 			c.log.Warn(ctx, fmt.Sprintf(entity.ErrorRedisNil, err.Error()))
