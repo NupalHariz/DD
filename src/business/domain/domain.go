@@ -42,7 +42,7 @@ func Init(param InitParam) *Domains {
 		Budget:             budget.Init(budget.InitParam{Db: param.Db, Log: param.Log, Json: param.Json, Redis: param.Redis}),
 		Money:              money.Init(money.InitParam{Db: param.Db, Log: param.Log, Json: param.Json, Redis: param.Redis}),
 		HistoryBudget:      historybudget.Init(historybudget.InitParam{Db: param.Db, Log: param.Log}),
-		DailyAssignment:    dailyassignment.Init(dailyassignment.InitParam{Db: param.Db, Log: param.Log}),
+		DailyAssignment:    dailyassignment.Init(dailyassignment.InitParam{Db: param.Db, Log: param.Log, Json: param.Json, Redis: param.Redis}),
 		AssignmentCategory: assignmentcategory.Init(assignmentcategory.InitParam{Db: param.Db, Log: param.Log}),
 		Assignment:         assignment.Init(assignment.InitParam{Db: param.Db, Log: param.Log, Json: param.Json, Redis: param.Redis}),
 	}
