@@ -29,7 +29,7 @@ func (c *category) upsertCache(ctx context.Context, key string, category entity.
 		return errors.NewWithCode(codes.CodeCacheSetSimpleKey, err.Error())
 	}
 
-	c.log.Debug(ctx, fmt.Sprintf("success to create category cachse with key %s and body %v", key, category))
+	c.log.Debug(ctx, fmt.Sprintf("success to create category cache with key %s and body %v", key, category))
 
 	return nil
 }
@@ -47,7 +47,7 @@ func (c *category) upsertCacheList(ctx context.Context, key string, categories [
 		return errors.NewWithCode(codes.CodeCacheSetSimpleKey, err.Error())
 	}
 
-	c.log.Debug(ctx, fmt.Sprintf("success to create list category cachse with key %s and body %v", key, categories))
+	c.log.Debug(ctx, fmt.Sprintf("success to create list category cache with key %s and body %v", key, categories))
 
 	return nil
 }
