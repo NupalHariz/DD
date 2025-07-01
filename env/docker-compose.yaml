@@ -1,4 +1,4 @@
-name: boiler-plate-local
+name: DD
 services:
   mysql:
     # use this for mac
