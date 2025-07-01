@@ -86,13 +86,13 @@ func (b *budget) Update(ctx context.Context, updateParam entity.BudgetUpdatePara
 
 func (b *budget) GetAll(ctx context.Context, param entity.BudgetParam) ([]entity.Budget, error) {
 	var budgets []entity.Budget
-	marshalledBudgets, err := b.json.Marshal(param)
+	marshalledParam, err := b.json.Marshal(param)
 	if err != nil {
 		return budgets, err
 	}
 
 	if !param.BypassCache {
-		budgets, err = b.getCacheList(ctx, fmt.Sprintf(getAllBudgetByKey, string(marshalledBudgets)))
+		budgets, err = b.getCacheList(ctx, fmt.Sprintf(getAllBudgetByKey, string(marshalledParam)))
 		switch {
 		case errors.Is(err, redis.Nil):
 			b.log.Warn(ctx, fmt.Sprintf(entity.ErrorRedisNil, err.Error()))
@@ -108,7 +108,7 @@ func (b *budget) GetAll(ctx context.Context, param entity.BudgetParam) ([]entity
 		return budgets, err
 	}
 
-	err = b.upsertCacheList(ctx, fmt.Sprintf(getAllBudgetByKey, string(marshalledBudgets)), budgets, b.redis.GetDefaultTTL(ctx))
+	err = b.upsertCacheList(ctx, fmt.Sprintf(getAllBudgetByKey, string(marshalledParam)), budgets, b.redis.GetDefaultTTL(ctx))
 	if err != nil {
 		b.log.Error(ctx, fmt.Sprintf(entity.ErrorRedis, err.Error()))
 	}
