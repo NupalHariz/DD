@@ -40,7 +40,6 @@ type GetTransactionParam struct {
 
 type GetTransactionResponse struct {
 	Id       int64            `json:"id"`
-	UserId   int64            `json:"user_id"`
 	Amount   int64            `json:"amount"`
 	Category string           `json:"category"`
 	Type     entity.MoneyType `json:"type"`
