@@ -14,7 +14,8 @@ type CategoryInputParam struct {
 }
 
 type CategoryParam struct {
-	Ids    []int64 `db:"id" param:"id"`
-	UserId int64   `db:"user_id" param:"user_id"`
-	Option query.Option
+	Ids         []int64 `db:"id" param:"id"`
+	UserId      int64   `db:"user_id" param:"user_id"`
+	Option      query.Option
+	BypassCache bool
 }
