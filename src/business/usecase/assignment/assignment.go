@@ -1,8 +1,9 @@
 package assignment
 
 import (
+	"bytes"
 	"context"
-	"fmt"
+	"html/template"
 	"sync"
 	"time"
 
@@ -13,6 +14,8 @@ import (
 	"github.com/NupalHariz/DD/src/business/entity"
 	"github.com/NupalHariz/DD/src/business/service/mail"
 	"github.com/reyhanmichiels/go-pkg/v2/auth"
+	"github.com/reyhanmichiels/go-pkg/v2/codes"
+	"github.com/reyhanmichiels/go-pkg/v2/errors"
 	"github.com/reyhanmichiels/go-pkg/v2/query"
 )
 
@@ -170,18 +173,39 @@ func (a *assignment) TodayDeadlineScheduler(ctx context.Context) error {
 
 		user := userMap[userId]
 
-		body := fmt.Sprintf("Hello %s, you have the following assignment that due todays: <br>", user.Name)
-		for _, a := range assignment {
-			body += fmt.Sprintf("- %s<br>", a.Name)
+		htmlFile := "src/business/service/mail/tmpl/assignment_notification.html"
+
+		tmpl, err := template.ParseFiles(htmlFile)
+		if err != nil {
+			return errors.NewWithCode(codes.CodeInternalServerError, err.Error())
+		}
+
+		var body bytes.Buffer
+		err = tmpl.Execute(&body, mail.AssignmentNotification{
+			Name:       user.Name,
+			Assignments: a.userAssignments(assignment),
+		})
+		if err != nil {
+			return errors.NewWithCode(codes.CodeInternalServerError, err.Error())
 		}
 
 		go func() {
 			defer wg.Done()
-			_ = a.mail.SendEmail(ctx, user.Email, "Assignment Deadline", body)
+			_ = a.mail.SendEmail(ctx, user.Email, "Assignment Deadline", body.String())
 		}()
 	}
 
 	wg.Wait()
 
 	return nil
+}
+
+func (a *assignment) userAssignments(assignments []entity.Assignment) []string {
+	var assignmentName []string
+
+	for _, a := range assignments {
+		assignmentName = append(assignmentName, a.Name)
+	}
+
+	return assignmentName
 }
