@@ -1,6 +1,7 @@
 package usecase
 
 import (
+	"github.com/NupalHariz/DD/src/business/service/mail"
 	"github.com/NupalHariz/DD/src/business/usecase/assignment"
 	assignmentcategory "github.com/NupalHariz/DD/src/business/usecase/assignment_category"
 	"github.com/NupalHariz/DD/src/business/usecase/budget"
@@ -32,6 +33,7 @@ type InitParam struct {
 	Log  log.Interface
 	Hash hash.Interface
 	Auth auth.Interface
+	Mail mail.Interface
 }
 
 func Init(param InitParam) *Usecases {
@@ -42,6 +44,6 @@ func Init(param InitParam) *Usecases {
 		Money:              money.Init(money.InitParam{Auth: param.Auth, MoneyDom: param.Dom.Money, BudgetDom: param.Dom.Budget, CategoryDom: param.Dom.Category}),
 		DailyAssignment:    dailyassignment.Init(dailyassignment.InitParam{Auth: param.Auth, DailyAssignmentDom: param.Dom.DailyAssignment}),
 		AssignmentCategory: assignmentcategory.Init(assignmentcategory.InitParam{Auth: param.Auth, AssignmentCategoryDom: param.Dom.AssignmentCategory}),
-		Assignment:         assignment.Init(assignment.InitParam{Auth: param.Auth, Assignment: param.Dom.Assignment, AssignmentCategoryDom: param.Dom.AssignmentCategory}),
+		Assignment:         assignment.Init(assignment.InitParam{Auth: param.Auth, Assignment: param.Dom.Assignment, AssignmentCategoryDom: param.Dom.AssignmentCategory, UserDom: param.Dom.User, Mail: param.Mail}),
 	}
 }

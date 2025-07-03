@@ -42,9 +42,10 @@ type UserUpdateParam struct {
 }
 
 type UserParam struct {
-	ID           int64  `db:"id" uri:"user_id" param:"id"`
-	Email        string `db:"email" param:"email"`
-	RefreshToken string `db:"refresh_token" param:"refresh_token"`
+	ID           int64   `db:"id" uri:"user_id" param:"id"`
+	Ids          []int64 `db:"id" param:"id"`
+	Email        string  `db:"email" param:"email"`
+	RefreshToken string  `db:"refresh_token" param:"refresh_token"`
 	PaginationParam
 	QueryOption query.Option
 	BypassCache bool

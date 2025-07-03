@@ -46,8 +46,10 @@ type AssignmentUpdateParam struct {
 }
 
 type AssignmentParam struct {
-	Id          int64 `db:"id" param:"id"`
-	UserId      int64 `db:"user_id" param:"user_id"`
+	Id          int64  `db:"id" param:"id"`
+	UserId      int64  `db:"user_id" param:"user_id"`
+	Deadline    string `db:"deadline" param:"deadline"`
+	Status      string `db:"status" param:"status"`
 	Option      query.Option
 	BypassCache bool
 	PaginationParam

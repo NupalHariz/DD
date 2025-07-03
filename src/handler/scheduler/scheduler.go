@@ -92,6 +92,16 @@ func (s *scheduler) assignScheduledTask() {
 		},
 		s.uc.DailyAssignment.DailyAssignmentResetScheduler,
 	)
+
+	s.assignTask(
+		SchedulerTaskConf{
+			Name: "AssignmentNotification",
+			Enabled: true,
+			TimeType: schedulerTypeDaily,
+			ScheduledTime: "00:00",
+		},
+		s.uc.Assignment.TodayDeadlineScheduler,
+	)
 }
 
 func (s *scheduler) Run() {
