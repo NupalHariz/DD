@@ -90,7 +90,10 @@ func (a *assignment) GetAll(ctx context.Context, param dto.GetAllAssignmentParam
 	assignments, err := a.assignmentDom.GetAll(
 		ctx,
 		entity.AssignmentParam{
-			UserId: loginUser.ID,
+			UserId:     loginUser.ID,
+			CategoryId: param.CategoryId,
+			Priority:   entity.Priority(param.Priority),
+			Status:     entity.Status(param.Status),
 			Option: query.Option{
 				DisableLimit: false,
 			},
@@ -141,7 +144,7 @@ func (a *assignment) GetAll(ctx context.Context, param dto.GetAllAssignmentParam
 func (a *assignment) TodayDeadlineScheduler(ctx context.Context) error {
 	currentDate := time.Now().Format("2006-01-02")
 
-	assignments, err := a.assignmentDom.GetAll(ctx, entity.AssignmentParam{Deadline: currentDate, Status: string(entity.OnGoing)})
+	assignments, err := a.assignmentDom.GetAll(ctx, entity.AssignmentParam{Deadline: currentDate, Status: entity.OnGoing})
 	if err != nil {
 		return err
 	}
@@ -182,7 +185,7 @@ func (a *assignment) TodayDeadlineScheduler(ctx context.Context) error {
 
 		var body bytes.Buffer
 		err = tmpl.Execute(&body, mail.AssignmentNotification{
-			Name:       user.Name,
+			Name:        user.Name,
 			Assignments: a.userAssignments(assignment),
 		})
 		if err != nil {

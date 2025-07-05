@@ -45,9 +45,9 @@ func (c *UpdateAssignmentParam) ToAssignmentUpdateParam() entity.AssignmentUpdat
 }
 
 type GetAllAssignmentParam struct {
-	CategoryId int64  `query:"category_id"`
-	Status     string `query:"status"`
-	Priority   string `query:"priority"`
+	CategoryId int64  `form:"category_id"`
+	Status     string `form:"status"`
+	Priority   string `form:"priority"`
 	entity.PaginationParam
 }
 
