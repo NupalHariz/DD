@@ -39,6 +39,6 @@ type GetAllBudgetResponse struct {
 }
 
 type GetBudgetParam struct {
-	Type string `json:"type"`
+	Type string `form:"type"`
 	entity.PaginationParam
 }
