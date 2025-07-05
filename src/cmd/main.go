@@ -21,8 +21,8 @@ import (
 	"github.com/reyhanmichiels/go-pkg/v2/sql"
 )
 
-// @contact.name   Reyhan Hafiz Rusyard
-// @contact.email  michielsreyhan@gmail.com
+// @contact.name   Naufal Haris Rusyard
+// @contact.email  naufal.michiels@gmail.com
 
 // @securitydefinitions.apikey BearerAuth
 // @in header
