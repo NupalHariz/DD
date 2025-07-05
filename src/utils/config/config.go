@@ -22,6 +22,7 @@ type Application struct {
 	Translator  translator.Config
 	RateLimiter rate_limiter.Config
 	Parser      parser.Options
+	Mail        Mail
 }
 
 type ApplicationMeta struct {
@@ -66,6 +67,13 @@ type DummyConfig struct {
 }
 
 type BasicAuthConf struct {
+	Username string
+	Password string
+}
+
+type Mail struct {
+	Host     string
+	Port     int
 	Username string
 	Password string
 }

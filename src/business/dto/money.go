@@ -3,7 +3,7 @@ package dto
 import "github.com/NupalHariz/DD/src/business/entity"
 
 type CreateTransactionParam struct {
-	Amount     int64  `json:"amount" binding:"required"`
+	Amount     int64  `json:"amount" binding:"required,gte=0"`
 	CategoryId int64  `json:"category_id" binding:"required"`
 	Type       string `json:"type" binding:"required"`
 }
@@ -19,7 +19,7 @@ func (c *CreateTransactionParam) ToInputMoneyParam(userId int64) entity.MoneyInp
 
 type UpdateTransactionParam struct {
 	Id         int64  `json:"-" uri:"id"`
-	Amount     int64  `json:"amount"`
+	Amount     int64  `json:"amount" binding:"gte=0"`
 	CategoryId int64  `json:"category_id"`
 	Type       string `json:"type"`
 }

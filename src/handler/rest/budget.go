@@ -23,6 +23,18 @@ func (r *rest) CreateBudget(ctx *gin.Context) {
 	r.httpRespSuccess(ctx, codes.CodeCreated, nil, nil)
 }
 
+// @Summary Update Budget
+// @Description Set a new budget plan
+// @Tags Budget
+// @Security BearerAuth
+// @Param id path string true "budget id"
+// @Param data body dto.UpdateBudgetParam true "Update Budget Data"
+// @Produce json
+// @Success 200 {object} entity.HTTPResp{}
+// @Failure 400 {object} entity.HTTPResp{}
+// @Failure 404 {object} entity.HTTPResp{}
+// @Failure 500 {object} entity.HTTPResp{}
+// @Router /v1/budgets/{id} [PUT]
 func (r *rest) UpdateBudget(ctx *gin.Context) {
 	var param dto.UpdateBudgetParam
 
@@ -45,6 +57,18 @@ func (r *rest) UpdateBudget(ctx *gin.Context) {
 	r.httpRespSuccess(ctx, codes.CodeSuccess, nil, nil)
 }
 
+// @Summary Get All Budget
+// @Description Get all budget
+// @Tags Budget
+// @Security BearerAuth
+// @Param type query string flse "budget type"
+// @Param page query string false "page"
+// @Produce json
+// @Success 200 {object} entity.HTTPResp{data=[]dto.GetAllBudgetResponse}
+// @Failure 400 {object} entity.HTTPResp{}
+// @Failure 404 {object} entity.HTTPResp{}
+// @Failure 500 {object} entity.HTTPResp{}
+// @Router /v1/budgets [GET]
 func (r *rest) GetAllBudget(ctx *gin.Context) {
 	var param dto.GetBudgetParam
 

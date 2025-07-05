@@ -5,6 +5,7 @@ import (
 	"errors"
 
 	"github.com/NupalHariz/DD/src/business/domain"
+	"github.com/NupalHariz/DD/src/business/service/mail"
 	"github.com/NupalHariz/DD/src/business/usecase"
 	"github.com/NupalHariz/DD/src/handler/rest"
 	"github.com/NupalHariz/DD/src/handler/scheduler"
@@ -20,8 +21,8 @@ import (
 	"github.com/reyhanmichiels/go-pkg/v2/sql"
 )
 
-// @contact.name   Reyhan Hafiz Rusyard
-// @contact.email  michielsreyhan@gmail.com
+// @contact.name   Naufal Haris Rusyard
+// @contact.email  naufal.michiels@gmail.com
 
 // @securitydefinitions.apikey BearerAuth
 // @in header
@@ -79,8 +80,10 @@ func main() {
 	// auth
 	auth := auth.Init(cfg.Auth, log)
 
+	mail := mail.Init(mail.InitParam{Log: log, Cfg: cfg.Mail})
+
 	// init usecase
-	uc := usecase.Init(usecase.InitParam{Dom: dom, Log: log, Json: parser.JSONParser(), Hash: hash, Auth: auth})
+	uc := usecase.Init(usecase.InitParam{Dom: dom, Log: log, Json: parser.JSONParser(), Hash: hash, Auth: auth, Mail: mail})
 
 	sch := scheduler.Init(
 		scheduler.InitParam{

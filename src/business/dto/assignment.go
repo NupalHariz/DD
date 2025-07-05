@@ -7,11 +7,11 @@ import (
 )
 
 type CreateAssignmentParam struct {
-	CategoryId int64  `json:"category_id"`
-	Name       string `json:"name"`
-	Deadline   string `json:"deadline"`
-	Status     string `json:"status"`
-	Priority   string `json:"priority"`
+	CategoryId int64  `json:"category_id" binding:"required"`
+	Name       string `json:"name" binding:"required"`
+	Deadline   string `json:"deadline" binding:"required"`
+	Status     string `json:"status" binding:"required"`
+	Priority   string `json:"priority" binding:"required"`
 }
 
 func (c *CreateAssignmentParam) ToAssignmentInputParam(userId int64) entity.AssignmentInputParam {
@@ -45,9 +45,9 @@ func (c *UpdateAssignmentParam) ToAssignmentUpdateParam() entity.AssignmentUpdat
 }
 
 type GetAllAssignmentParam struct {
-	CategoryId int64  `query:"category_id"`
-	Status     string `query:"status"`
-	Priority   string `query:"priority"`
+	CategoryId int64  `form:"category_id"`
+	Status     string `form:"status"`
+	Priority   string `form:"priority"`
 	entity.PaginationParam
 }
 

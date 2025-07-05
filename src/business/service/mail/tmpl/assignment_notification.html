@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Assignment Reminder</title>
+</head>
+<body>
+  <p>Hello {{.Name}},</p>
+
+  <p>You have the following assignment(s) due today:</p>
+
+  <ul>
+    {{range .Assignments}}
+      <li>{{.}}</li>
+    {{end}}
+  </ul>
+
+  <p>Dont forget to complete it!!!</p>
+</body>
+</html>

@@ -3,9 +3,9 @@ package dto
 import "github.com/NupalHariz/DD/src/business/entity"
 
 type CreateBudgetParam struct {
-	CategoryId int64  `json:"category_id"`
-	Amount     int64  `json:"amount"`
-	Type       string `json:"type"`
+	CategoryId int64  `json:"category_id" binding:"required"`
+	Amount     int64  `json:"amount" binding:"required,gte=0"`
+	Type       string `json:"type" binding:"required"`
 }
 
 func (c *CreateBudgetParam) ToBudgetInputParam(userId int64) entity.BudgetInputParam {
@@ -19,7 +19,7 @@ func (c *CreateBudgetParam) ToBudgetInputParam(userId int64) entity.BudgetInputP
 
 type UpdateBudgetParam struct {
 	Id     int64  `json:"-" uri:"id"`
-	Amount int64  `json:"amount"`
+	Amount int64  `json:"amount" binding:"gte=0"`
 	Type   string `json:"type"`
 }
 
@@ -39,6 +39,6 @@ type GetAllBudgetResponse struct {
 }
 
 type GetBudgetParam struct {
-	Type string `json:"type"`
+	Type string `form:"type"`
 	entity.PaginationParam
 }

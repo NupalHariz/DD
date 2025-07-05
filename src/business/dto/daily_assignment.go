@@ -6,7 +6,7 @@ import (
 )
 
 type CreateDailyAssignmentParam struct {
-	Name string `json:"name"`
+	Name string `json:"name" binding:"required"`
 }
 
 func (c *CreateDailyAssignmentParam) ToDailyAssignmentInputParam(userId int64) entity.DailyAssignmentInputParam {
