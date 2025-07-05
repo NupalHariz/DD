@@ -3,7 +3,7 @@ package dto
 import "github.com/NupalHariz/DD/src/business/entity"
 
 type CreateAssignmentCategory struct {
-	Name string `json:"name"`
+	Name string `json:"name" binding:"required"`
 }
 
 func (c *CreateAssignmentCategory) ToAssignmentCategoryInputParam(userId int64) entity.AssignmentCategoryInputParam {
