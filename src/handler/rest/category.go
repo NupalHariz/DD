@@ -8,7 +8,7 @@ import (
 
 // @Summary Create Category
 // @Description Create category for users
-// @Tags categories
+// @Tags Category
 // @Produce json
 // @Param data body dto.CreateCategoryParam{} true "New Category"
 // @Security BearerAuth
@@ -36,7 +36,7 @@ func (r *rest) CreateCategory(ctx *gin.Context) {
 
 // @Summary Get All Category
 // @Description Get all category that has been created by user
-// @Tags categories
+// @Tags Category
 // @Produce json
 // @Security BearerAuth
 // @Success 200 {object} entity.HTTPResp{data=[]dto.GetAllCategoryResponse}

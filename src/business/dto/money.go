@@ -3,7 +3,7 @@ package dto
 import "github.com/NupalHariz/DD/src/business/entity"
 
 type CreateTransactionParam struct {
-	Amount     int64  `json:"amount" binding:"required, gt=0"`
+	Amount     int64  `json:"amount" binding:"required,gte=0"`
 	CategoryId int64  `json:"category_id" binding:"required"`
 	Type       string `json:"type" binding:"required"`
 }

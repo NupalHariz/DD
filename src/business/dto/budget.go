@@ -4,7 +4,7 @@ import "github.com/NupalHariz/DD/src/business/entity"
 
 type CreateBudgetParam struct {
 	CategoryId int64  `json:"category_id" binding:"required"`
-	Amount     int64  `json:"amount" binding:"required, gte= 0"`
+	Amount     int64  `json:"amount" binding:"required,gte=0"`
 	Type       string `json:"type" binding:"required"`
 }
 
