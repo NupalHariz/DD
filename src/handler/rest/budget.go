@@ -62,6 +62,7 @@ func (r *rest) UpdateBudget(ctx *gin.Context) {
 // @Tags Budget
 // @Security BearerAuth
 // @Param type query string flse "budget type"
+// @Param page query string false "page"
 // @Produce json
 // @Success 200 {object} entity.HTTPResp{data=[]dto.GetAllBudgetResponse}
 // @Failure 400 {object} entity.HTTPResp{}

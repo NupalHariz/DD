@@ -75,6 +75,7 @@ func (r *rest) UpdateAssignment(ctx *gin.Context) {
 // @Param category_id query string false "category id"
 // @Param status query string false "status"
 // @Param priority query string false "priority"
+// @Param page query string false "page"
 // @Success 200 {object} entity.HTTPResp{data=[]dto.GetAllAssignmentResponse}
 // @Failure 400 {object} entity.HTTPResp{}
 // @Failure 404 {object} entity.HTTPResp{}
