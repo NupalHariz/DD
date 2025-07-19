@@ -78,7 +78,7 @@ The system has scheduler that runs automatically. The scheduler will run the fol
 ### Prerequisites
 
 - Go 1.21+
-- Docker (for running RabbitMQ, PostgreSQL, and Redis)
+- Docker (for running MySQL and Redis)
 
 ### Set Up Project
 
